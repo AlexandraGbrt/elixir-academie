@@ -2382,33 +2382,37 @@
             </div>
           </div>
         </div>
-
-        <div class="form-card reveal-r">
-          <h2>Recevoir le Module 1</h2>
-          <p>
-            Entrez votre prénom et email pour recevoir le PDF gratuitement.
-            Accès immédiat, aucune carte bancaire requise.
-          </p>
-          <div class="form-field">
-            <label>Votre prénom</label>
-            <input type="text" placeholder="Marie" id="input-prenom" />
+          
+          <div class="form-card reveal-r">
+            <h2>Recevoir le Module 1</h2>
+            <p>Entrez votre prénom et email pour recevoir le PDF gratuitement.
+            Accès immédiat.</p>
+          
+            <form action="https://api.web3forms.com/submit" method="POST">
+          
+              <input type="hidden" name="access_key" value="VOTRE_CLE_RECUE_PAR_EMAIL">
+          
+              <div class="form-field">
+                <label for="name">Votre prénom</label>
+                <input type="text" name="name" id="name" placeholder="Ex: Alexandra Gaubert" required>
+              </div>
+          
+              <div class="form-field">
+                <label for="email">Votre meilleur e-mail</label>
+                <input type="email" name="email" id="email" placeholder="nom@exemple.com" required>
+              </div>
+          
+              <input type="hidden" name="subject" value="Demande d'accès Module 1 Gratuit - Elixir Académie">
+          
+              <button type="submit" class="form-submit">
+                Recevoir le Module 1 gratuitement →
+              </button>
+          
+              <div class="form-privacy">
+                Vos données sont sécurisées et ne seront jamais partagées.
+              </div>
+            </form>
           </div>
-          <div class="form-field">
-            <label>Votre email</label>
-            <input
-              type="email"
-              placeholder="marie@email.com"
-              id="input-email"
-            />
-          </div>
-          <button class="form-submit" onclick="handleFreeDownload()">
-            Recevoir le Module 1 gratuitement →
-          </button>
-          <div class="form-privacy">
-            Vos données sont confidentielles. Aucun spam.
-          </div>
-        </div>
-      </div>
 
       <section class="free-next">
         <div class="container">
