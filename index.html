@@ -1,1668 +1,3437 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Élixir Académie — Formation Extensions Capillaires</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-/* ═══════════════════════════════════════════════
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Élixir Académie — Formation Extensions Capillaires</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ═══════════════════════════════════════════════
    VARIABLES & RESET
 ═══════════════════════════════════════════════ */
-:root {
-  --or: #C9A84C;
-  --or-l: #F0DFA0;
-  --or-d: #8C6E28;
-  --or-glow: rgba(201,168,76,0.25);
-  --noir: #080808;
-  --n1: #0F0F0F;
-  --n2: #161616;
-  --n3: #1E1E1E;
-  --n4: #282828;
-  --n5: #333333;
-  --blanc: #F8F6F0;
-  --gris: #8A8580;
-  --bleu: #1A3A5C;
-  --bleu-l: #C8DFF5;
-  --vert: #1A5C2A;
-  --vert-l: #C8F5D5;
-  --rouge: #8B1A1A;
-  --rouge-l: #FDECEA;
-}
-*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-html { scroll-behavior:smooth; font-size:16px; }
-body {
-  background:var(--noir);
-  color:var(--blanc);
-  font-family:'Outfit', sans-serif;
-  overflow-x:hidden;
-  cursor:none;
-}
-/* Custom cursor */
-.cursor {
-  width:12px; height:12px;
-  background:var(--or);
-  border-radius:50%;
-  position:fixed; top:0; left:0;
-  pointer-events:none; z-index:9999;
-  transform:translate(-50%,-50%);
-  transition:transform 0.15s ease, width 0.3s, height 0.3s, background 0.3s;
-  mix-blend-mode:difference;
-}
-.cursor-ring {
-  width:36px; height:36px;
-  border:1px solid var(--or);
-  border-radius:50%;
-  position:fixed; top:0; left:0;
-  pointer-events:none; z-index:9998;
-  transform:translate(-50%,-50%);
-  transition:transform 0.4s ease, width 0.3s, height 0.3s, opacity 0.3s;
-  opacity:0.6;
-}
-body:has(a:hover) .cursor,
-body:has(button:hover) .cursor { width:20px; height:20px; }
+      :root {
+        --or: #c9a84c;
+        --or-l: #f0dfa0;
+        --or-d: #8c6e28;
+        --or-glow: rgba(201, 168, 76, 0.25);
+        --noir: #080808;
+        --n1: #0f0f0f;
+        --n2: #161616;
+        --n3: #1e1e1e;
+        --n4: #282828;
+        --n5: #333333;
+        --blanc: #f8f6f0;
+        --gris: #8a8580;
+        --bleu: #1a3a5c;
+        --bleu-l: #c8dff5;
+        --vert: #1a5c2a;
+        --vert-l: #c8f5d5;
+        --rouge: #8b1a1a;
+        --rouge-l: #fdecea;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+      body {
+        background: var(--noir);
+        color: var(--blanc);
+        font-family: "Outfit", sans-serif;
+        overflow-x: hidden;
+        cursor: none;
+      }
+      /* Custom cursor */
+      .cursor {
+        width: 12px;
+        height: 12px;
+        background: var(--or);
+        border-radius: 50%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition:
+          transform 0.15s ease,
+          width 0.3s,
+          height 0.3s,
+          background 0.3s;
+        mix-blend-mode: difference;
+      }
+      .cursor-ring {
+        width: 36px;
+        height: 36px;
+        border: 1px solid var(--or);
+        border-radius: 50%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition:
+          transform 0.4s ease,
+          width 0.3s,
+          height 0.3s,
+          opacity 0.3s;
+        opacity: 0.6;
+      }
+      body:has(a:hover) .cursor,
+      body:has(button:hover) .cursor {
+        width: 20px;
+        height: 20px;
+      }
 
-/* ═══════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════
    NAVIGATION TUNNEL
 ═══════════════════════════════════════════════ */
-.tunnel-nav {
-  position:fixed; top:0; left:0; right:0; z-index:1000;
-  height:64px;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:0 48px;
-  background:rgba(8,8,8,0.95);
-  border-bottom:1px solid rgba(201,168,76,0.12);
-  backdrop-filter:blur(20px);
-}
-.tnav-brand {
-  font-family:'Playfair Display', serif;
-  font-size:18px; letter-spacing:2px;
-  color:var(--or); text-decoration:none;
-  font-weight:600;
-}
-.tnav-brand span { color:var(--blanc); font-weight:400; }
-.tnav-steps {
-  display:flex; align-items:center; gap:0;
-}
-.tnav-step {
-  display:flex; align-items:center; gap:0;
-  cursor:pointer; text-decoration:none;
-}
-.tnav-step-dot {
-  width:28px; height:28px;
-  border:2px solid rgba(201,168,76,0.3);
-  border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  font-size:11px; font-weight:700; color:var(--gris);
-  transition:all 0.3s;
-  background:var(--n2);
-}
-.tnav-step.active .tnav-step-dot {
-  border-color:var(--or);
-  background:var(--or);
-  color:var(--noir);
-}
-.tnav-step.done .tnav-step-dot {
-  border-color:var(--vert);
-  background:var(--vert);
-  color:#fff;
-  font-size:14px;
-}
-.tnav-step-label {
-  font-size:11px; font-weight:500; color:var(--gris);
-  margin-left:8px; letter-spacing:0.5px;
-  transition:color 0.3s;
-  white-space:nowrap;
-}
-.tnav-step.active .tnav-step-label { color:var(--or); }
-.tnav-connector {
-  width:40px; height:1px;
-  background:rgba(201,168,76,0.15);
-  margin:0 8px;
-}
-.tnav-cta {
-  background:linear-gradient(135deg,var(--or-d),var(--or));
-  color:var(--noir); padding:9px 24px;
-  font-size:12px; font-weight:700; letter-spacing:1.5px;
-  text-transform:uppercase; text-decoration:none;
-  border-radius:2px; transition:all 0.3s;
-}
-.tnav-cta:hover { transform:translateY(-1px); box-shadow:0 6px 24px var(--or-glow); }
+      .tunnel-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 48px;
+        background: rgba(8, 8, 8, 0.95);
+        border-bottom: 1px solid rgba(201, 168, 76, 0.12);
+        backdrop-filter: blur(20px);
+      }
+      .tnav-brand {
+        font-family: "Playfair Display", serif;
+        font-size: 18px;
+        letter-spacing: 2px;
+        color: var(--or);
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .tnav-brand span {
+        color: var(--blanc);
+        font-weight: 400;
+      }
+      .tnav-steps {
+        display: flex;
+        align-items: center;
+        gap: 0;
+      }
+      .tnav-step {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .tnav-step-dot {
+        width: 28px;
+        height: 28px;
+        border: 2px solid rgba(201, 168, 76, 0.3);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--gris);
+        transition: all 0.3s;
+        background: var(--n2);
+      }
+      .tnav-step.active .tnav-step-dot {
+        border-color: var(--or);
+        background: var(--or);
+        color: var(--noir);
+      }
+      .tnav-step.done .tnav-step-dot {
+        border-color: var(--vert);
+        background: var(--vert);
+        color: #fff;
+        font-size: 14px;
+      }
+      .tnav-step-label {
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--gris);
+        margin-left: 8px;
+        letter-spacing: 0.5px;
+        transition: color 0.3s;
+        white-space: nowrap;
+      }
+      .tnav-step.active .tnav-step-label {
+        color: var(--or);
+      }
+      .tnav-connector {
+        width: 40px;
+        height: 1px;
+        background: rgba(201, 168, 76, 0.15);
+        margin: 0 8px;
+      }
+      .tnav-cta {
+        background: linear-gradient(135deg, var(--or-d), var(--or));
+        color: var(--noir);
+        padding: 9px 24px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-radius: 2px;
+        transition: all 0.3s;
+      }
+      .tnav-cta:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 24px var(--or-glow);
+      }
 
-/* ═══════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════
    PAGES SYSTEM
 ═══════════════════════════════════════════════ */
-.page { display:none; min-height:100vh; padding-top:64px; }
-.page.active { display:block; }
+      .page {
+        display: none;
+        min-height: 100vh;
+        padding-top: 64px;
+      }
+      .page.active {
+        display: block;
+      }
 
-/* ═══════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════
    UTILITAIRES
 ═══════════════════════════════════════════════ */
-.serif { font-family:'Playfair Display',serif; }
-.container { max-width:1100px; margin:0 auto; padding:0 24px; }
-.container-sm { max-width:760px; margin:0 auto; padding:0 24px; }
+      .serif {
+        font-family: "Playfair Display", serif;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .container-sm {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
 
-.gold-bar {
-  height:2px;
-  background:linear-gradient(90deg, transparent, var(--or-d), var(--or), var(--or-l), var(--or), var(--or-d), transparent);
-  display:block; margin:0;
-}
-.gold-bar-l { width:60px; height:2px; background:linear-gradient(90deg,var(--or-d),var(--or)); display:block; }
-.gold-bar-c { width:60px; height:2px; background:linear-gradient(90deg,var(--or-d),var(--or)); display:block; margin:0 auto; }
+      .gold-bar {
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--or-d),
+          var(--or),
+          var(--or-l),
+          var(--or),
+          var(--or-d),
+          transparent
+        );
+        display: block;
+        margin: 0;
+      }
+      .gold-bar-l {
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--or-d), var(--or));
+        display: block;
+      }
+      .gold-bar-c {
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--or-d), var(--or));
+        display: block;
+        margin: 0 auto;
+      }
 
-.section-label {
-  font-size:10px; letter-spacing:5px; text-transform:uppercase;
-  color:var(--or); margin-bottom:16px; display:block; font-weight:600;
-}
-.section-title {
-  font-family:'Playfair Display',serif;
-  font-size:clamp(32px,5vw,58px);
-  line-height:1.08; margin-bottom:20px;
-  font-weight:700;
-}
-.section-title em { font-style:italic; color:var(--or); }
+      .section-label {
+        font-size: 10px;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        color: var(--or);
+        margin-bottom: 16px;
+        display: block;
+        font-weight: 600;
+      }
+      .section-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(32px, 5vw, 58px);
+        line-height: 1.08;
+        margin-bottom: 20px;
+        font-weight: 700;
+      }
+      .section-title em {
+        font-style: italic;
+        color: var(--or);
+      }
 
-.btn-gold {
-  display:inline-block;
-  background:linear-gradient(135deg,var(--or-d),var(--or));
-  color:var(--noir); padding:16px 48px;
-  font-size:13px; font-weight:700; letter-spacing:2px;
-  text-transform:uppercase; text-decoration:none; border:none; cursor:pointer;
-  border-radius:2px; transition:all 0.3s;
-  box-shadow:0 8px 32px var(--or-glow);
-  font-family:'Outfit',sans-serif;
-}
-.btn-gold:hover { transform:translateY(-3px); box-shadow:0 16px 48px rgba(201,168,76,0.4); }
-.btn-ghost {
-  display:inline-block;
-  border:1px solid rgba(201,168,76,0.35);
-  color:var(--blanc); padding:16px 40px;
-  font-size:12px; font-weight:500; letter-spacing:1.5px;
-  text-transform:uppercase; text-decoration:none; cursor:pointer;
-  border-radius:2px; transition:all 0.3s; background:transparent;
-  font-family:'Outfit',sans-serif;
-}
-.btn-ghost:hover { border-color:var(--or); color:var(--or); }
+      .btn-gold {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--or-d), var(--or));
+        color: var(--noir);
+        padding: 16px 48px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        border-radius: 2px;
+        transition: all 0.3s;
+        box-shadow: 0 8px 32px var(--or-glow);
+        font-family: "Outfit", sans-serif;
+      }
+      .btn-gold:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 48px rgba(201, 168, 76, 0.4);
+      }
+      .btn-ghost {
+        display: inline-block;
+        border: 1px solid rgba(201, 168, 76, 0.35);
+        color: var(--blanc);
+        padding: 16px 40px;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        text-decoration: none;
+        cursor: pointer;
+        border-radius: 2px;
+        transition: all 0.3s;
+        background: transparent;
+        font-family: "Outfit", sans-serif;
+      }
+      .btn-ghost:hover {
+        border-color: var(--or);
+        color: var(--or);
+      }
 
-.reveal { opacity:0; transform:translateY(32px); transition:opacity 0.7s ease, transform 0.7s ease; }
-.reveal.visible { opacity:1; transform:translateY(0); }
-.reveal-l { opacity:0; transform:translateX(-32px); transition:opacity 0.7s ease, transform 0.7s ease; }
-.reveal-l.visible { opacity:1; transform:translateX(0); }
-.reveal-r { opacity:0; transform:translateX(32px); transition:opacity 0.7s ease, transform 0.7s ease; }
-.reveal-r.visible { opacity:1; transform:translateX(0); }
+      .reveal {
+        opacity: 0;
+        transform: translateY(32px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-l {
+        opacity: 0;
+        transform: translateX(-32px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal-l.visible {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .reveal-r {
+        opacity: 0;
+        transform: translateX(32px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal-r.visible {
+        opacity: 1;
+        transform: translateX(0);
+      }
 
-/* ═══════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════
    PAGE 1 — ACCUEIL (HUB)
 ═══════════════════════════════════════════════ */
-#page-home .hero {
-  min-height:calc(100vh - 64px);
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  text-align:center; padding:80px 24px 60px;
-  position:relative; overflow:hidden;
-}
-#page-home .hero::before {
-  content:'';
-  position:absolute; inset:0;
-  background:
-    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(26,58,92,0.08) 0%, transparent 50%);
-}
-/* Animated grid */
-#page-home .hero-grid {
-  position:absolute; inset:0; overflow:hidden;
-  background-image:
-    linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
-  background-size:60px 60px;
-  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
-}
-.hero-eyebrow {
-  display:inline-flex; align-items:center; gap:10px;
-  border:1px solid rgba(201,168,76,0.3);
-  padding:8px 20px; border-radius:40px;
-  font-size:11px; letter-spacing:3px; text-transform:uppercase;
-  color:var(--or); margin-bottom:36px;
-  background:rgba(201,168,76,0.05);
-  backdrop-filter:blur(10px);
-}
-.hero-eyebrow-dot { width:6px; height:6px; border-radius:50%; background:var(--or); animation:pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+      #page-home .hero {
+        min-height: calc(100vh - 64px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 80px 24px 60px;
+        position: relative;
+        overflow: hidden;
+      }
+      #page-home .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 50% at 50% 0%,
+            rgba(201, 168, 76, 0.07) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 40% 40% at 20% 80%,
+            rgba(26, 58, 92, 0.08) 0%,
+            transparent 50%
+          );
+      }
+      /* Animated grid */
+      #page-home .hero-grid {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        background-image:
+          linear-gradient(rgba(201, 168, 76, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(201, 168, 76, 0.04) 1px, transparent 1px);
+        background-size: 60px 60px;
+        mask-image: radial-gradient(
+          ellipse 80% 80% at 50% 50%,
+          black 0%,
+          transparent 100%
+        );
+      }
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid rgba(201, 168, 76, 0.3);
+        padding: 8px 20px;
+        border-radius: 40px;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--or);
+        margin-bottom: 36px;
+        background: rgba(201, 168, 76, 0.05);
+        backdrop-filter: blur(10px);
+      }
+      .hero-eyebrow-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--or);
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.5;
+          transform: scale(0.8);
+        }
+      }
 
-#page-home .hero h1 {
-  font-family:'Playfair Display',serif;
-  font-size:clamp(48px,8vw,96px);
-  line-height:1.0; font-weight:900;
-  margin-bottom:8px;
-  letter-spacing:-1px;
-}
-#page-home .hero h1 .line1 { display:block; color:var(--blanc); }
-#page-home .hero h1 .line2 { display:block; color:var(--or); font-style:italic; font-weight:700; }
-#page-home .hero h1 .line3 { display:block; color:var(--blanc); }
+      #page-home .hero h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(48px, 8vw, 96px);
+        line-height: 1;
+        font-weight: 900;
+        margin-bottom: 8px;
+        letter-spacing: -1px;
+      }
+      #page-home .hero h1 .line1 {
+        display: block;
+        color: var(--blanc);
+      }
+      #page-home .hero h1 .line2 {
+        display: block;
+        color: var(--or);
+        font-style: italic;
+        font-weight: 700;
+      }
+      #page-home .hero h1 .line3 {
+        display: block;
+        color: var(--blanc);
+      }
 
-.hero-sub {
-  font-size:18px; font-weight:300; color:rgba(248,246,240,0.6);
-  max-width:560px; margin:28px auto 48px; line-height:1.7;
-}
-.hero-actions { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; margin-bottom:80px; }
+      .hero-sub {
+        font-size: 18px;
+        font-weight: 300;
+        color: rgba(248, 246, 240, 0.6);
+        max-width: 560px;
+        margin: 28px auto 48px;
+        line-height: 1.7;
+      }
+      .hero-actions {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 80px;
+      }
 
-.hero-proof {
-  display:flex; gap:48px; flex-wrap:wrap; justify-content:center;
-  padding-top:40px; border-top:1px solid rgba(255,255,255,0.06);
-  position:relative; z-index:1;
-}
-.proof-item { text-align:center; }
-.proof-num {
-  font-family:'Playfair Display',serif;
-  font-size:48px; font-weight:700; color:var(--or);
-  display:block; line-height:1;
-}
-.proof-label {
-  font-size:11px; letter-spacing:2px; text-transform:uppercase;
-  color:var(--gris); display:block; margin-top:6px;
-}
+      .hero-proof {
+        display: flex;
+        gap: 48px;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-top: 40px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        position: relative;
+        z-index: 1;
+      }
+      .proof-item {
+        text-align: center;
+      }
+      .proof-num {
+        font-family: "Playfair Display", serif;
+        font-size: 48px;
+        font-weight: 700;
+        color: var(--or);
+        display: block;
+        line-height: 1;
+      }
+      .proof-label {
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--gris);
+        display: block;
+        margin-top: 6px;
+      }
 
-/* Modules grid */
-.modules-section { padding:120px 0; background:var(--n1); }
-.modules-grid {
-  display:grid; grid-template-columns:repeat(5,1fr);
-  gap:2px; margin-top:60px;
-}
-.mod-card {
-  background:var(--n2);
-  padding:32px 20px;
-  position:relative; overflow:hidden;
-  cursor:pointer; transition:all 0.4s;
-  border-bottom:2px solid transparent;
-  text-decoration:none; color:inherit;
-  display:block;
-}
-.mod-card::before {
-  content:''; position:absolute;
-  inset:0; background:linear-gradient(180deg,rgba(201,168,76,0.06) 0%,transparent 100%);
-  opacity:0; transition:opacity 0.4s;
-}
-.mod-card:hover { background:var(--n3); border-bottom-color:var(--or); transform:translateY(-4px); }
-.mod-card:hover::before { opacity:1; }
-.mod-card.free::after {
-  content:'GRATUIT';
-  position:absolute; top:14px; right:14px;
-  background:var(--vert); color:#fff;
-  font-size:9px; font-weight:700; letter-spacing:1.5px;
-  padding:3px 8px; border-radius:2px;
-}
-.mod-card.new::after {
-  content:'NOUVEAU';
-  position:absolute; top:14px; right:14px;
-  background:var(--or); color:var(--noir);
-  font-size:9px; font-weight:700; letter-spacing:1.5px;
-  padding:3px 8px; border-radius:2px;
-}
-.mod-num {
-  font-family:'Playfair Display',serif;
-  font-size:52px; font-weight:900;
-  color:rgba(201,168,76,0.1);
-  line-height:1; margin-bottom:16px; display:block;
-}
-.mod-emoji { font-size:28px; margin-bottom:16px; display:block; }
-.mod-card h3 {
-  font-family:'Playfair Display',serif;
-  font-size:17px; margin-bottom:6px; font-weight:700; line-height:1.3;
-}
-.mod-tech {
-  font-size:10px; letter-spacing:2px; text-transform:uppercase;
-  color:var(--or); margin-bottom:16px; display:block;
-}
-.mod-points {
-  list-style:none;
-  border-top:1px solid rgba(255,255,255,0.05);
-  padding-top:14px; margin-bottom:20px;
-}
-.mod-points li {
-  font-size:12px; color:rgba(248,246,240,0.6);
-  padding:4px 0; display:flex; align-items:flex-start; gap:6px;
-  border-bottom:1px solid rgba(255,255,255,0.03);
-}
-.mod-points li::before {
-  content:'◆'; color:var(--or); font-size:6px; margin-top:5px; flex-shrink:0;
-}
-.mod-price {
-  font-family:'Playfair Display',serif;
-  font-size:28px; font-weight:700; color:var(--or);
-}
-.mod-price-free { color:var(--vert-l); font-size:16px; font-weight:500; }
-.mod-price sub { font-size:13px; color:var(--gris); font-family:'Outfit',sans-serif; font-weight:300; }
+      /* Modules grid */
+      .modules-section {
+        padding: 120px 0;
+        background: var(--n1);
+      }
+      .modules-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 2px;
+        margin-top: 60px;
+      }
+      .mod-card {
+        background: var(--n2);
+        padding: 32px 20px;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.4s;
+        border-bottom: 2px solid transparent;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+      .mod-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(201, 168, 76, 0.06) 0%,
+          transparent 100%
+        );
+        opacity: 0;
+        transition: opacity 0.4s;
+      }
+      .mod-card:hover {
+        background: var(--n3);
+        border-bottom-color: var(--or);
+        transform: translateY(-4px);
+      }
+      .mod-card:hover::before {
+        opacity: 1;
+      }
+      .mod-card.free::after {
+        content: "GRATUIT";
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        background: var(--vert);
+        color: #fff;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        padding: 3px 8px;
+        border-radius: 2px;
+      }
+      .mod-card.new::after {
+        content: "NOUVEAU";
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        background: var(--or);
+        color: var(--noir);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        padding: 3px 8px;
+        border-radius: 2px;
+      }
+      .mod-num {
+        font-family: "Playfair Display", serif;
+        font-size: 52px;
+        font-weight: 900;
+        color: rgba(201, 168, 76, 0.1);
+        line-height: 1;
+        margin-bottom: 16px;
+        display: block;
+      }
+      .mod-emoji {
+        font-size: 28px;
+        margin-bottom: 16px;
+        display: block;
+      }
+      .mod-card h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 17px;
+        margin-bottom: 6px;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+      .mod-tech {
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--or);
+        margin-bottom: 16px;
+        display: block;
+      }
+      .mod-points {
+        list-style: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        padding-top: 14px;
+        margin-bottom: 20px;
+      }
+      .mod-points li {
+        font-size: 12px;
+        color: rgba(248, 246, 240, 0.6);
+        padding: 4px 0;
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      }
+      .mod-points li::before {
+        content: "◆";
+        color: var(--or);
+        font-size: 6px;
+        margin-top: 5px;
+        flex-shrink: 0;
+      }
+      .mod-price {
+        font-family: "Playfair Display", serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--or);
+      }
+      .mod-price-free {
+        color: var(--vert-l);
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .mod-price sub {
+        font-size: 13px;
+        color: var(--gris);
+        font-family: "Outfit", sans-serif;
+        font-weight: 300;
+      }
 
-/* Pack section */
-.pack-section { padding:100px 0; background:var(--n2); }
-.pack-card {
-  background:linear-gradient(135deg,var(--n3) 0%,var(--n4) 100%);
-  border:1px solid rgba(201,168,76,0.25);
-  border-radius:4px; padding:80px;
-  text-align:center; position:relative; overflow:hidden;
-}
-.pack-card::before {
-  content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(201,168,76,0.08) 0%,transparent 70%);
-}
-.pack-badge {
-  display:inline-block;
-  background:linear-gradient(135deg,var(--or-d),var(--or));
-  color:var(--noir); font-size:11px; font-weight:700;
-  letter-spacing:3px; text-transform:uppercase;
-  padding:8px 24px; border-radius:2px; margin-bottom:32px;
-}
-.pack-card h2 {
-  font-family:'Playfair Display',serif;
-  font-size:clamp(36px,5vw,56px); margin-bottom:16px; font-weight:900;
-}
-.pack-old { font-size:18px; color:var(--gris); text-decoration:line-through; margin-bottom:6px; }
-.pack-price {
-  font-family:'Playfair Display',serif;
-  font-size:88px; font-weight:900; color:var(--or); line-height:1;
-}
-.pack-price-sub { font-size:14px; color:var(--gris); margin-bottom:48px; }
-.pack-features {
-  display:flex; flex-wrap:wrap; justify-content:center;
-  gap:16px; margin-bottom:48px;
-}
-.pack-feat {
-  display:flex; align-items:center; gap:8px;
-  font-size:13px; color:rgba(248,246,240,0.8);
-}
-.pack-feat::before { content:'✓'; color:var(--or); font-weight:700; }
+      /* Pack section */
+      .pack-section {
+        padding: 100px 0;
+        background: var(--n2);
+      }
+      .pack-card {
+        background: linear-gradient(135deg, var(--n3) 0%, var(--n4) 100%);
+        border: 1px solid rgba(201, 168, 76, 0.25);
+        border-radius: 4px;
+        padding: 80px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .pack-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 60% 40% at 50% 0%,
+          rgba(201, 168, 76, 0.08) 0%,
+          transparent 70%
+        );
+      }
+      .pack-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--or-d), var(--or));
+        color: var(--noir);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        padding: 8px 24px;
+        border-radius: 2px;
+        margin-bottom: 32px;
+      }
+      .pack-card h2 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(36px, 5vw, 56px);
+        margin-bottom: 16px;
+        font-weight: 900;
+      }
+      .pack-old {
+        font-size: 18px;
+        color: var(--gris);
+        text-decoration: line-through;
+        margin-bottom: 6px;
+      }
+      .pack-price {
+        font-family: "Playfair Display", serif;
+        font-size: 88px;
+        font-weight: 900;
+        color: var(--or);
+        line-height: 1;
+      }
+      .pack-price-sub {
+        font-size: 14px;
+        color: var(--gris);
+        margin-bottom: 48px;
+      }
+      .pack-features {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+        margin-bottom: 48px;
+      }
+      .pack-feat {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: rgba(248, 246, 240, 0.8);
+      }
+      .pack-feat::before {
+        content: "✓";
+        color: var(--or);
+        font-weight: 700;
+      }
 
-/* Guarantee */
-.guarantee {
-  background:rgba(26,92,42,0.15);
-  border:1px solid rgba(26,152,90,0.25);
-  border-radius:4px; padding:20px 28px;
-  display:inline-flex; align-items:center; gap:12px;
-  font-size:13px; color:#6FCF97; margin-top:32px;
-}
+      /* Guarantee */
+      .guarantee {
+        background: rgba(26, 92, 42, 0.15);
+        border: 1px solid rgba(26, 152, 90, 0.25);
+        border-radius: 4px;
+        padding: 20px 28px;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 13px;
+        color: #6fcf97;
+        margin-top: 32px;
+      }
 
-/* ═══════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════
    PAGE 2 — MODULE 1 GRATUIT (CAPTURE)
 ═══════════════════════════════════════════════ */
-#page-free { background:var(--n1); }
+      #page-free {
+        background: var(--n1);
+      }
 
-.free-hero {
-  min-height:calc(100vh - 64px);
-  display:grid; grid-template-columns:1fr 1fr;
-  align-items:center; gap:80px;
-  padding:80px 48px;
-  max-width:1200px; margin:0 auto;
-}
-.free-hero-left { position:relative; }
-.free-tag {
-  display:inline-flex; align-items:center; gap:8px;
-  background:rgba(26,92,42,0.2); border:1px solid rgba(26,152,90,0.3);
-  color:var(--vert-l); font-size:10px; font-weight:700;
-  letter-spacing:3px; text-transform:uppercase;
-  padding:7px 18px; border-radius:20px; margin-bottom:28px;
-}
-.free-tag::before { content:'✓'; }
-.free-hero-left h1 {
-  font-family:'Playfair Display',serif;
-  font-size:clamp(38px,5vw,60px);
-  line-height:1.05; font-weight:900; margin-bottom:24px;
-}
-.free-hero-left h1 em { color:var(--or); font-style:italic; }
-.free-hero-left p {
-  font-size:17px; color:rgba(248,246,240,0.65);
-  line-height:1.8; margin-bottom:40px;
-}
+      .free-hero {
+        min-height: calc(100vh - 64px);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 80px;
+        padding: 80px 48px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .free-hero-left {
+        position: relative;
+      }
+      .free-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(26, 92, 42, 0.2);
+        border: 1px solid rgba(26, 152, 90, 0.3);
+        color: var(--vert-l);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        padding: 7px 18px;
+        border-radius: 20px;
+        margin-bottom: 28px;
+      }
+      .free-tag::before {
+        content: "✓";
+      }
+      .free-hero-left h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(38px, 5vw, 60px);
+        line-height: 1.05;
+        font-weight: 900;
+        margin-bottom: 24px;
+      }
+      .free-hero-left h1 em {
+        color: var(--or);
+        font-style: italic;
+      }
+      .free-hero-left p {
+        font-size: 17px;
+        color: rgba(248, 246, 240, 0.65);
+        line-height: 1.8;
+        margin-bottom: 40px;
+      }
 
-.free-includes {
-  display:flex; flex-direction:column; gap:12px; margin-bottom:40px;
-}
-.free-include {
-  display:flex; align-items:flex-start; gap:14px;
-  background:var(--n2); padding:16px 20px; border-radius:2px;
-  border-left:3px solid var(--or);
-  transition:background 0.2s;
-}
-.free-include:hover { background:var(--n3); }
-.free-include-icon { font-size:20px; flex-shrink:0; }
-.free-include-text h4 { font-size:14px; font-weight:600; margin-bottom:3px; }
-.free-include-text p { font-size:12px; color:var(--gris); line-height:1.5; }
+      .free-includes {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+      .free-include {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        background: var(--n2);
+        padding: 16px 20px;
+        border-radius: 2px;
+        border-left: 3px solid var(--or);
+        transition: background 0.2s;
+      }
+      .free-include:hover {
+        background: var(--n3);
+      }
+      .free-include-icon {
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+      .free-include-text h4 {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 3px;
+      }
+      .free-include-text p {
+        font-size: 12px;
+        color: var(--gris);
+        line-height: 1.5;
+      }
 
-/* Form card */
-.form-card {
-  background:var(--n2);
-  border:1px solid rgba(201,168,76,0.2);
-  border-radius:6px; padding:48px;
-  position:relative; overflow:hidden;
-}
-.form-card::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:3px;
-  background:linear-gradient(90deg,var(--or-d),var(--or),var(--or-l));
-}
-.form-card h2 {
-  font-family:'Playfair Display',serif;
-  font-size:28px; font-weight:700; margin-bottom:8px;
-}
-.form-card p { font-size:14px; color:var(--gris); margin-bottom:32px; line-height:1.6; }
+      /* Form card */
+      .form-card {
+        background: var(--n2);
+        border: 1px solid rgba(201, 168, 76, 0.2);
+        border-radius: 6px;
+        padding: 48px;
+        position: relative;
+        overflow: hidden;
+      }
+      .form-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--or-d), var(--or), var(--or-l));
+      }
+      .form-card h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .form-card p {
+        font-size: 14px;
+        color: var(--gris);
+        margin-bottom: 32px;
+        line-height: 1.6;
+      }
 
-.form-field { margin-bottom:20px; }
-.form-field label {
-  display:block; font-size:11px; font-weight:600;
-  letter-spacing:2px; text-transform:uppercase;
-  color:var(--or); margin-bottom:8px;
-}
-.form-field input {
-  width:100%; padding:14px 18px;
-  background:var(--n3); border:1px solid rgba(255,255,255,0.08);
-  color:var(--blanc); font-family:'Outfit',sans-serif; font-size:15px;
-  border-radius:2px; outline:none; transition:border-color 0.3s;
-}
-.form-field input:focus { border-color:var(--or); }
-.form-field input::placeholder { color:rgba(255,255,255,0.2); }
-.form-submit {
-  width:100%; padding:18px;
-  background:linear-gradient(135deg,var(--or-d),var(--or));
-  color:var(--noir); font-family:'Outfit',sans-serif;
-  font-size:13px; font-weight:700; letter-spacing:2px;
-  text-transform:uppercase; border:none; cursor:pointer;
-  border-radius:2px; transition:all 0.3s; margin-top:8px;
-}
-.form-submit:hover { transform:translateY(-2px); box-shadow:0 10px 40px var(--or-glow); }
-.form-privacy {
-  display:flex; align-items:center; gap:8px;
-  margin-top:16px; font-size:11px; color:var(--gris);
-}
-.form-privacy::before { content:'🔒'; font-size:12px; }
+      .form-field {
+        margin-bottom: 20px;
+      }
+      .form-field label {
+        display: block;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--or);
+        margin-bottom: 8px;
+      }
+      .form-field input {
+        width: 100%;
+        padding: 14px 18px;
+        background: var(--n3);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--blanc);
+        font-family: "Outfit", sans-serif;
+        font-size: 15px;
+        border-radius: 2px;
+        outline: none;
+        transition: border-color 0.3s;
+      }
+      .form-field input:focus {
+        border-color: var(--or);
+      }
+      .form-field input::placeholder {
+        color: rgba(255, 255, 255, 0.2);
+      }
+      .form-submit {
+        width: 100%;
+        padding: 18px;
+        background: linear-gradient(135deg, var(--or-d), var(--or));
+        color: var(--noir);
+        font-family: "Outfit", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        border: none;
+        cursor: pointer;
+        border-radius: 2px;
+        transition: all 0.3s;
+        margin-top: 8px;
+      }
+      .form-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 40px var(--or-glow);
+      }
+      .form-privacy {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 16px;
+        font-size: 11px;
+        color: var(--gris);
+      }
+      .form-privacy::before {
+        content: "🔒";
+        font-size: 12px;
+      }
 
-/* Teaser next */
-.free-next {
-  padding:100px 0; background:var(--n2);
-  text-align:center;
-}
-.free-next-modules {
-  display:flex; justify-content:center; gap:16px;
-  margin:48px 0; flex-wrap:wrap;
-}
-.fnm-card {
-  background:var(--n3); padding:24px 20px;
-  border-radius:2px; width:180px;
-  border-top:2px solid rgba(201,168,76,0.2);
-  transition:all 0.3s;
-}
-.fnm-card:hover { border-top-color:var(--or); transform:translateY(-3px); }
-.fnm-emoji { font-size:24px; display:block; margin-bottom:10px; }
-.fnm-card h4 { font-size:13px; font-weight:600; margin-bottom:4px; }
-.fnm-card span { font-size:11px; color:var(--or); }
+      /* Teaser next */
+      .free-next {
+        padding: 100px 0;
+        background: var(--n2);
+        text-align: center;
+      }
+      .free-next-modules {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin: 48px 0;
+        flex-wrap: wrap;
+      }
+      .fnm-card {
+        background: var(--n3);
+        padding: 24px 20px;
+        border-radius: 2px;
+        width: 180px;
+        border-top: 2px solid rgba(201, 168, 76, 0.2);
+        transition: all 0.3s;
+      }
+      .fnm-card:hover {
+        border-top-color: var(--or);
+        transform: translateY(-3px);
+      }
+      .fnm-emoji {
+        font-size: 24px;
+        display: block;
+        margin-bottom: 10px;
+      }
+      .fnm-card h4 {
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .fnm-card span {
+        font-size: 11px;
+        color: var(--or);
+      }
 
-/* ═══════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════
    PAGE 3 — MODULE 5 BUTTERFLY WEFT (VENTE)
 ═══════════════════════════════════════════════ */
-#page-m5 { background:var(--noir); }
+      #page-m5 {
+        background: var(--noir);
+      }
 
-/* Hero m5 */
-.m5-hero {
-  min-height:calc(100vh - 64px);
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  text-align:center; padding:80px 24px 60px;
-  position:relative; overflow:hidden;
-}
-.m5-hero::before {
-  content:'🦋';
-  position:absolute; font-size:500px; opacity:0.025;
-  top:50%; left:50%; transform:translate(-50%,-54%);
-  pointer-events:none; z-index:0;
-}
-.m5-hero::after {
-  content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(201,168,76,0.08) 0%,transparent 65%);
-}
+      /* Hero m5 */
+      .m5-hero {
+        min-height: calc(100vh - 64px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 80px 24px 60px;
+        position: relative;
+        overflow: hidden;
+      }
+      .m5-hero::before {
+        content: "🦋";
+        position: absolute;
+        font-size: 500px;
+        opacity: 0.025;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -54%);
+        pointer-events: none;
+        z-index: 0;
+      }
+      .m5-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 70% 50% at 50% 30%,
+          rgba(201, 168, 76, 0.08) 0%,
+          transparent 65%
+        );
+      }
 
-.m5-nouveau {
-  display:inline-flex; align-items:center; gap:8px;
-  background:rgba(26,58,92,0.4); border:1px solid var(--bleu-l);
-  color:var(--bleu-l); font-size:10px; font-weight:700;
-  letter-spacing:3px; text-transform:uppercase;
-  padding:7px 18px; border-radius:20px; margin-bottom:20px;
-  position:relative; z-index:1;
-}
+      .m5-nouveau {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(26, 58, 92, 0.4);
+        border: 1px solid var(--bleu-l);
+        color: var(--bleu-l);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        padding: 7px 18px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 1;
+      }
 
-.m5-hero-emoji {
-  font-size:88px; display:block; margin-bottom:24px;
-  animation:float 4s ease-in-out infinite;
-  position:relative; z-index:1;
-}
-@keyframes float { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-12px) rotate(3deg)} }
+      .m5-hero-emoji {
+        font-size: 88px;
+        display: block;
+        margin-bottom: 24px;
+        animation: float 4s ease-in-out infinite;
+        position: relative;
+        z-index: 1;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-12px) rotate(3deg);
+        }
+      }
 
-.m5-hero h1 {
-  font-family:'Playfair Display',serif;
-  font-size:clamp(42px,7vw,88px);
-  line-height:1.0; font-weight:900;
-  margin-bottom:20px; position:relative; z-index:1;
-}
-.m5-hero h1 .t1 { display:block; font-style:italic; color:var(--blanc); }
-.m5-hero h1 .t2 { display:block; color:var(--or); }
+      .m5-hero h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(42px, 7vw, 88px);
+        line-height: 1;
+        font-weight: 900;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 1;
+      }
+      .m5-hero h1 .t1 {
+        display: block;
+        font-style: italic;
+        color: var(--blanc);
+      }
+      .m5-hero h1 .t2 {
+        display: block;
+        color: var(--or);
+      }
 
-.m5-hero-promise {
-  font-family:'Playfair Display',serif;
-  font-size:20px; font-style:italic;
-  color:rgba(248,246,240,0.6); max-width:540px;
-  margin:0 auto 16px; line-height:1.6; position:relative; z-index:1;
-}
-.m5-hero-sub {
-  font-size:15px; color:rgba(248,246,240,0.5);
-  max-width:480px; margin:0 auto 52px; position:relative; z-index:1;
-}
-.m5-hero-actions { position:relative; z-index:1; display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
+      .m5-hero-promise {
+        font-family: "Playfair Display", serif;
+        font-size: 20px;
+        font-style: italic;
+        color: rgba(248, 246, 240, 0.6);
+        max-width: 540px;
+        margin: 0 auto 16px;
+        line-height: 1.6;
+        position: relative;
+        z-index: 1;
+      }
+      .m5-hero-sub {
+        font-size: 15px;
+        color: rgba(248, 246, 240, 0.5);
+        max-width: 480px;
+        margin: 0 auto 52px;
+        position: relative;
+        z-index: 1;
+      }
+      .m5-hero-actions {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
 
-/* Stats */
-.m5-stats {
-  display:grid; grid-template-columns:repeat(4,1fr);
-  gap:2px; margin-top:80px; position:relative; z-index:1;
-}
-.m5-stat {
-  background:rgba(22,22,22,0.8); padding:24px;
-  text-align:center; backdrop-filter:blur(10px);
-  border-top:2px solid rgba(201,168,76,0.15);
-  transition:border-top-color 0.3s;
-}
-.m5-stat:hover { border-top-color:var(--or); }
-.m5-stat-num {
-  font-family:'Playfair Display',serif;
-  font-size:40px; font-weight:900; color:var(--or);
-  display:block; line-height:1;
-}
-.m5-stat-label { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gris); margin-top:8px; display:block; }
+      /* Stats */
+      .m5-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2px;
+        margin-top: 80px;
+        position: relative;
+        z-index: 1;
+      }
+      .m5-stat {
+        background: rgba(22, 22, 22, 0.8);
+        padding: 24px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        border-top: 2px solid rgba(201, 168, 76, 0.15);
+        transition: border-top-color 0.3s;
+      }
+      .m5-stat:hover {
+        border-top-color: var(--or);
+      }
+      .m5-stat-num {
+        font-family: "Playfair Display", serif;
+        font-size: 40px;
+        font-weight: 900;
+        color: var(--or);
+        display: block;
+        line-height: 1;
+      }
+      .m5-stat-label {
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--gris);
+        margin-top: 8px;
+        display: block;
+      }
 
-/* Anatomie */
-.m5-anatomy { padding:120px 0; background:var(--n1); }
-.anatomy-split {
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:60px; align-items:center;
-}
-.anatomy-visual-card {
-  background:var(--n2); border:1px solid rgba(201,168,76,0.15);
-  border-radius:4px; padding:48px;
-  position:relative;
-}
-.anatomy-visual-card::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:3px;
-  background:linear-gradient(90deg,var(--or-d),var(--or),var(--or-l));
-}
-.weft-viz {
-  display:flex; flex-direction:column; align-items:center;
-  gap:0; margin:24px 0;
-}
-.weft-layer {
-  width:100%; padding:12px 24px;
-  background:rgba(201,168,76,0.1);
-  border:1px solid rgba(201,168,76,0.3);
-  text-align:center;
-  font-size:12px; font-weight:700; color:var(--or);
-  letter-spacing:2px; text-transform:uppercase;
-}
-.weft-gap-zone {
-  width:100%; padding:16px;
-  background:rgba(22,22,22,0.8);
-  border-left:1px solid rgba(201,168,76,0.2);
-  border-right:1px solid rgba(201,168,76,0.2);
-  display:flex; align-items:center; justify-content:center; gap:20px;
-}
-.pu-hole-viz {
-  width:52px; height:52px; border-radius:50%;
-  border:2px solid var(--or); background:var(--n2);
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  font-size:9px; font-weight:700; color:var(--or); letter-spacing:1px;
-  position:relative;
-}
-.pu-hole-viz::after {
-  content:''; position:absolute; inset:-6px;
-  border-radius:50%; border:1px solid rgba(201,168,76,0.2);
-}
-.ring-viz {
-  background:rgba(201,168,76,0.15);
-  border:2px solid var(--or); border-radius:3px;
-  padding:6px 14px; font-size:10px; font-weight:700; color:var(--or-l);
-  letter-spacing:1px;
-}
-.gap-arrow {
-  position:absolute; left:-12px;
-  font-size:10px; color:var(--gris); white-space:nowrap;
-}
-.weft-hair {
-  width:2px; height:36px;
-  background:linear-gradient(180deg,var(--or-l),transparent);
-  margin:0 auto;
-}
-.weft-hair-label {
-  text-align:center; font-size:11px; color:var(--gris);
-  margin-top:4px; letter-spacing:1px;
-}
+      /* Anatomie */
+      .m5-anatomy {
+        padding: 120px 0;
+        background: var(--n1);
+      }
+      .anatomy-split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+      .anatomy-visual-card {
+        background: var(--n2);
+        border: 1px solid rgba(201, 168, 76, 0.15);
+        border-radius: 4px;
+        padding: 48px;
+        position: relative;
+      }
+      .anatomy-visual-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--or-d), var(--or), var(--or-l));
+      }
+      .weft-viz {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        margin: 24px 0;
+      }
+      .weft-layer {
+        width: 100%;
+        padding: 12px 24px;
+        background: rgba(201, 168, 76, 0.1);
+        border: 1px solid rgba(201, 168, 76, 0.3);
+        text-align: center;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--or);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+      .weft-gap-zone {
+        width: 100%;
+        padding: 16px;
+        background: rgba(22, 22, 22, 0.8);
+        border-left: 1px solid rgba(201, 168, 76, 0.2);
+        border-right: 1px solid rgba(201, 168, 76, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+      }
+      .pu-hole-viz {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: 2px solid var(--or);
+        background: var(--n2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 9px;
+        font-weight: 700;
+        color: var(--or);
+        letter-spacing: 1px;
+        position: relative;
+      }
+      .pu-hole-viz::after {
+        content: "";
+        position: absolute;
+        inset: -6px;
+        border-radius: 50%;
+        border: 1px solid rgba(201, 168, 76, 0.2);
+      }
+      .ring-viz {
+        background: rgba(201, 168, 76, 0.15);
+        border: 2px solid var(--or);
+        border-radius: 3px;
+        padding: 6px 14px;
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--or-l);
+        letter-spacing: 1px;
+      }
+      .gap-arrow {
+        position: absolute;
+        left: -12px;
+        font-size: 10px;
+        color: var(--gris);
+        white-space: nowrap;
+      }
+      .weft-hair {
+        width: 2px;
+        height: 36px;
+        background: linear-gradient(180deg, var(--or-l), transparent);
+        margin: 0 auto;
+      }
+      .weft-hair-label {
+        text-align: center;
+        font-size: 11px;
+        color: var(--gris);
+        margin-top: 4px;
+        letter-spacing: 1px;
+      }
 
-.anatomy-points { display:flex; flex-direction:column; gap:2px; }
-.anat-point {
-  background:var(--n2); padding:20px 24px;
-  display:grid; grid-template-columns:120px 1fr; gap:16px;
-  border-left:2px solid transparent; transition:border-color 0.3s;
-}
-.anat-point:hover { border-left-color:var(--or); background:var(--n3); }
-.anat-point-key { font-size:11px; font-weight:700; color:var(--or); letter-spacing:1px; text-transform:uppercase; line-height:1.4; }
-.anat-point-val { font-size:13px; color:rgba(248,246,240,0.7); line-height:1.6; }
+      .anatomy-points {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .anat-point {
+        background: var(--n2);
+        padding: 20px 24px;
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 16px;
+        border-left: 2px solid transparent;
+        transition: border-color 0.3s;
+      }
+      .anat-point:hover {
+        border-left-color: var(--or);
+        background: var(--n3);
+      }
+      .anat-point-key {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--or);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        line-height: 1.4;
+      }
+      .anat-point-val {
+        font-size: 13px;
+        color: rgba(248, 246, 240, 0.7);
+        line-height: 1.6;
+      }
 
-/* Méthodes */
-.m5-methods { padding:120px 0; background:var(--noir); }
-.methods-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:60px; }
-.method-card {
-  background:var(--n2); padding:40px 32px;
-  border-radius:2px; position:relative; overflow:hidden;
-  border-top:3px solid transparent; transition:all 0.4s;
-}
-.method-card.best { border-top-color:var(--or); }
-.method-card:hover { transform:translateY(-6px); background:var(--n3); }
-.method-card.best::after {
-  content:'RECOMMANDÉE';
-  position:absolute; top:18px; right:18px;
-  background:var(--or); color:var(--noir);
-  font-size:9px; font-weight:700; letter-spacing:1.5px;
-  padding:4px 10px; border-radius:2px;
-}
-.method-emoji { font-size:40px; margin-bottom:20px; display:block; }
-.method-card h3 {
-  font-family:'Playfair Display',serif;
-  font-size:24px; margin-bottom:8px; font-weight:700;
-}
-.method-level {
-  display:inline-block; font-size:10px; font-weight:700;
-  letter-spacing:1.5px; text-transform:uppercase; padding:4px 12px;
-  border-radius:20px; margin-bottom:18px;
-}
-.lvl-beginner { background:rgba(26,92,42,0.3); color:#6FCF97; }
-.lvl-pro { background:rgba(201,168,76,0.15); color:var(--or); }
-.lvl-expert { background:rgba(26,58,92,0.4); color:var(--bleu-l); }
-.method-desc { font-size:14px; color:var(--gris); line-height:1.7; margin-bottom:20px; }
-.method-time { font-size:12px; color:var(--or); font-weight:600; display:flex; align-items:center; gap:6px; }
+      /* Méthodes */
+      .m5-methods {
+        padding: 120px 0;
+        background: var(--noir);
+      }
+      .methods-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-top: 60px;
+      }
+      .method-card {
+        background: var(--n2);
+        padding: 40px 32px;
+        border-radius: 2px;
+        position: relative;
+        overflow: hidden;
+        border-top: 3px solid transparent;
+        transition: all 0.4s;
+      }
+      .method-card.best {
+        border-top-color: var(--or);
+      }
+      .method-card:hover {
+        transform: translateY(-6px);
+        background: var(--n3);
+      }
+      .method-card.best::after {
+        content: "RECOMMANDÉE";
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        background: var(--or);
+        color: var(--noir);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        padding: 4px 10px;
+        border-radius: 2px;
+      }
+      .method-emoji {
+        font-size: 40px;
+        margin-bottom: 20px;
+        display: block;
+      }
+      .method-card h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 24px;
+        margin-bottom: 8px;
+        font-weight: 700;
+      }
+      .method-level {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 18px;
+      }
+      .lvl-beginner {
+        background: rgba(26, 92, 42, 0.3);
+        color: #6fcf97;
+      }
+      .lvl-pro {
+        background: rgba(201, 168, 76, 0.15);
+        color: var(--or);
+      }
+      .lvl-expert {
+        background: rgba(26, 58, 92, 0.4);
+        color: var(--bleu-l);
+      }
+      .method-desc {
+        font-size: 14px;
+        color: var(--gris);
+        line-height: 1.7;
+        margin-bottom: 20px;
+      }
+      .method-time {
+        font-size: 12px;
+        color: var(--or);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
 
-/* Steps */
-.m5-steps { padding:120px 0; background:var(--n2); }
-.steps-timeline { display:flex; flex-direction:column; gap:0; margin-top:60px; }
-.step-row {
-  display:grid; grid-template-columns:80px 1fr;
-  border-bottom:1px solid rgba(255,255,255,0.04);
-  transition:background 0.2s;
-}
-.step-row:hover { background:rgba(201,168,76,0.02); }
-.step-num-col {
-  background:var(--n3); display:flex; align-items:center;
-  justify-content:center; padding:28px;
-  border-right:2px solid rgba(201,168,76,0.15);
-  position:relative;
-}
-.step-num-col::after {
-  content:''; position:absolute; bottom:-1px; left:50%;
-  transform:translateX(-50%);
-  width:1px; height:1px;
-  background:var(--or);
-}
-.step-n {
-  font-family:'Playfair Display',serif;
-  font-size:36px; font-weight:900; color:var(--or);
-  line-height:1;
-}
-.step-content-col { padding:28px 32px; }
-.step-content-col h4 {
-  font-size:16px; font-weight:600; margin-bottom:8px;
-  color:var(--blanc);
-}
-.step-content-col p { font-size:13px; color:var(--gris); line-height:1.7; }
-.step-tip {
-  background:rgba(201,168,76,0.06);
-  border-left:2px solid var(--or);
-  padding:10px 14px; margin-top:12px;
-  font-size:12px; color:var(--or-l); font-style:italic; line-height:1.5;
-  border-radius:0 2px 2px 0;
-}
+      /* Steps */
+      .m5-steps {
+        padding: 120px 0;
+        background: var(--n2);
+      }
+      .steps-timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin-top: 60px;
+      }
+      .step-row {
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        transition: background 0.2s;
+      }
+      .step-row:hover {
+        background: rgba(201, 168, 76, 0.02);
+      }
+      .step-num-col {
+        background: var(--n3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 28px;
+        border-right: 2px solid rgba(201, 168, 76, 0.15);
+        position: relative;
+      }
+      .step-num-col::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 1px;
+        height: 1px;
+        background: var(--or);
+      }
+      .step-n {
+        font-family: "Playfair Display", serif;
+        font-size: 36px;
+        font-weight: 900;
+        color: var(--or);
+        line-height: 1;
+      }
+      .step-content-col {
+        padding: 28px 32px;
+      }
+      .step-content-col h4 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--blanc);
+      }
+      .step-content-col p {
+        font-size: 13px;
+        color: var(--gris);
+        line-height: 1.7;
+      }
+      .step-tip {
+        background: rgba(201, 168, 76, 0.06);
+        border-left: 2px solid var(--or);
+        padding: 10px 14px;
+        margin-top: 12px;
+        font-size: 12px;
+        color: var(--or-l);
+        font-style: italic;
+        line-height: 1.5;
+        border-radius: 0 2px 2px 0;
+      }
 
-/* Avantages */
-.m5-avantages { padding:120px 0; background:var(--noir); }
-.avantages-bento {
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  grid-template-rows:auto auto;
-  gap:3px; margin-top:60px;
-}
-.av-tile {
-  background:var(--n2); padding:32px 28px;
-  transition:all 0.3s;
-  border-bottom:2px solid transparent;
-}
-.av-tile:hover { background:var(--n3); border-bottom-color:var(--or); }
-.av-tile.wide { grid-column:span 2; }
-.av-tile.tall { grid-row:span 2; }
-.av-tile-icon { font-size:32px; margin-bottom:16px; display:block; }
-.av-tile h3 {
-  font-size:15px; font-weight:700; color:var(--or);
-  margin-bottom:8px;
-}
-.av-tile p { font-size:13px; color:var(--gris); line-height:1.6; }
+      /* Avantages */
+      .m5-avantages {
+        padding: 120px 0;
+        background: var(--noir);
+      }
+      .avantages-bento {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: auto auto;
+        gap: 3px;
+        margin-top: 60px;
+      }
+      .av-tile {
+        background: var(--n2);
+        padding: 32px 28px;
+        transition: all 0.3s;
+        border-bottom: 2px solid transparent;
+      }
+      .av-tile:hover {
+        background: var(--n3);
+        border-bottom-color: var(--or);
+      }
+      .av-tile.wide {
+        grid-column: span 2;
+      }
+      .av-tile.tall {
+        grid-row: span 2;
+      }
+      .av-tile-icon {
+        font-size: 32px;
+        margin-bottom: 16px;
+        display: block;
+      }
+      .av-tile h3 {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--or);
+        margin-bottom: 8px;
+      }
+      .av-tile p {
+        font-size: 13px;
+        color: var(--gris);
+        line-height: 1.6;
+      }
 
-/* Comparatif */
-.m5-comp { padding:120px 0; background:var(--n1); }
-.comp-wrap { overflow-x:auto; margin-top:60px; }
-.comp-tbl {
-  width:100%; border-collapse:collapse;
-  font-size:13px; min-width:700px;
-}
-.comp-tbl th {
-  background:var(--n3); color:var(--or);
-  padding:14px 12px; font-weight:700; letter-spacing:1px;
-  text-transform:uppercase; font-size:11px;
-  border-bottom:2px solid var(--or);
-  text-align:center;
-}
-.comp-tbl th:first-child { text-align:left; }
-.comp-tbl td {
-  padding:12px; border-bottom:1px solid rgba(255,255,255,0.04);
-  text-align:center; color:rgba(248,246,240,0.7);
-}
-.comp-tbl td:first-child { font-weight:600; color:var(--blanc); text-align:left; }
-.comp-tbl tr:nth-child(even) td { background:rgba(255,255,255,0.01); }
-.comp-tbl .butterfly-col {
-  background:rgba(201,168,76,0.07) !important;
-  color:var(--or) !important; font-weight:700;
-}
-.comp-tbl th.butterfly-col { color:var(--noir) !important; background:var(--or) !important; }
+      /* Comparatif */
+      .m5-comp {
+        padding: 120px 0;
+        background: var(--n1);
+      }
+      .comp-wrap {
+        overflow-x: auto;
+        margin-top: 60px;
+      }
+      .comp-tbl {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        min-width: 700px;
+      }
+      .comp-tbl th {
+        background: var(--n3);
+        color: var(--or);
+        padding: 14px 12px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 11px;
+        border-bottom: 2px solid var(--or);
+        text-align: center;
+      }
+      .comp-tbl th:first-child {
+        text-align: left;
+      }
+      .comp-tbl td {
+        padding: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        text-align: center;
+        color: rgba(248, 246, 240, 0.7);
+      }
+      .comp-tbl td:first-child {
+        font-weight: 600;
+        color: var(--blanc);
+        text-align: left;
+      }
+      .comp-tbl tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.01);
+      }
+      .comp-tbl .butterfly-col {
+        background: rgba(201, 168, 76, 0.07) !important;
+        color: var(--or) !important;
+        font-weight: 700;
+      }
+      .comp-tbl th.butterfly-col {
+        color: var(--noir) !important;
+        background: var(--or) !important;
+      }
 
-/* Prix m5 */
-.m5-prix { padding:120px 0; background:var(--noir); text-align:center; }
-.prix-stack {
-  max-width:680px; margin:60px auto 0;
-  display:flex; flex-direction:column; gap:16px;
-}
-.prix-option {
-  background:var(--n2); border:1px solid rgba(201,168,76,0.15);
-  border-radius:4px; padding:40px 48px;
-  position:relative; overflow:hidden; transition:all 0.3s;
-}
-.prix-option:hover { border-color:rgba(201,168,76,0.4); transform:translateY(-2px); }
-.prix-option.featured {
-  border-color:var(--or);
-  background:linear-gradient(135deg,var(--n3) 0%,var(--n4) 100%);
-}
-.prix-option.featured::before {
-  content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(201,168,76,0.08) 0%,transparent 70%);
-}
-.prix-option-badge {
-  position:absolute; top:-1px; left:50%; transform:translateX(-50%);
-  background:var(--or); color:var(--noir);
-  font-size:10px; font-weight:700; letter-spacing:2px;
-  padding:4px 16px; border-radius:0 0 4px 4px;
-}
-.prix-option-title { font-size:14px; font-weight:600; color:var(--gris); margin-bottom:8px; text-transform:uppercase; letter-spacing:1px; }
-.prix-big {
-  font-family:'Playfair Display',serif;
-  font-size:72px; font-weight:900; color:var(--or);
-  line-height:1; display:block;
-}
-.prix-option-sub { font-size:13px; color:var(--gris); margin-bottom:24px; }
-.prix-option-includes {
-  display:flex; flex-direction:column; gap:8px;
-  margin-bottom:28px; text-align:left;
-}
-.prix-option-include {
-  display:flex; align-items:center; gap:10px;
-  font-size:13px; color:rgba(248,246,240,0.8);
-}
-.prix-option-include::before { content:'✓'; color:var(--or); font-weight:700; flex-shrink:0; }
+      /* Prix m5 */
+      .m5-prix {
+        padding: 120px 0;
+        background: var(--noir);
+        text-align: center;
+      }
+      .prix-stack {
+        max-width: 680px;
+        margin: 60px auto 0;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .prix-option {
+        background: var(--n2);
+        border: 1px solid rgba(201, 168, 76, 0.15);
+        border-radius: 4px;
+        padding: 40px 48px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s;
+      }
+      .prix-option:hover {
+        border-color: rgba(201, 168, 76, 0.4);
+        transform: translateY(-2px);
+      }
+      .prix-option.featured {
+        border-color: var(--or);
+        background: linear-gradient(135deg, var(--n3) 0%, var(--n4) 100%);
+      }
+      .prix-option.featured::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 80% 50% at 50% 0%,
+          rgba(201, 168, 76, 0.08) 0%,
+          transparent 70%
+        );
+      }
+      .prix-option-badge {
+        position: absolute;
+        top: -1px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--or);
+        color: var(--noir);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        padding: 4px 16px;
+        border-radius: 0 0 4px 4px;
+      }
+      .prix-option-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--gris);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .prix-big {
+        font-family: "Playfair Display", serif;
+        font-size: 72px;
+        font-weight: 900;
+        color: var(--or);
+        line-height: 1;
+        display: block;
+      }
+      .prix-option-sub {
+        font-size: 13px;
+        color: var(--gris);
+        margin-bottom: 24px;
+      }
+      .prix-option-includes {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 28px;
+        text-align: left;
+      }
+      .prix-option-include {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+        color: rgba(248, 246, 240, 0.8);
+      }
+      .prix-option-include::before {
+        content: "✓";
+        color: var(--or);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
 
-/* FAQ m5 */
-.m5-faq { padding:100px 0; background:var(--n2); }
-.faq-accordion { margin-top:48px; }
-.faq-item { border-bottom:1px solid rgba(255,255,255,0.06); }
-.faq-q {
-  width:100%; background:none; border:none;
-  text-align:left; padding:24px 0; cursor:pointer;
-  display:flex; justify-content:space-between; align-items:center; gap:16px;
-  font-family:'Outfit',sans-serif; font-size:16px; font-weight:500;
-  color:var(--blanc); transition:color 0.3s;
-}
-.faq-q:hover { color:var(--or); }
-.faq-icon {
-  width:28px; height:28px; border:1px solid rgba(201,168,76,0.3);
-  border-radius:50%; display:flex; align-items:center; justify-content:center;
-  font-size:18px; color:var(--or); flex-shrink:0; transition:all 0.3s;
-  background:rgba(201,168,76,0.05);
-}
-.faq-item.open .faq-icon { transform:rotate(45deg); background:var(--or); color:var(--noir); border-color:var(--or); }
-.faq-a {
-  font-size:14px; color:var(--gris); line-height:1.8;
-  max-height:0; overflow:hidden; transition:max-height 0.4s ease, padding 0.3s;
-}
-.faq-item.open .faq-a { max-height:200px; padding-bottom:24px; }
+      /* FAQ m5 */
+      .m5-faq {
+        padding: 100px 0;
+        background: var(--n2);
+      }
+      .faq-accordion {
+        margin-top: 48px;
+      }
+      .faq-item {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .faq-q {
+        width: 100%;
+        background: none;
+        border: none;
+        text-align: left;
+        padding: 24px 0;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        font-family: "Outfit", sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--blanc);
+        transition: color 0.3s;
+      }
+      .faq-q:hover {
+        color: var(--or);
+      }
+      .faq-icon {
+        width: 28px;
+        height: 28px;
+        border: 1px solid rgba(201, 168, 76, 0.3);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: var(--or);
+        flex-shrink: 0;
+        transition: all 0.3s;
+        background: rgba(201, 168, 76, 0.05);
+      }
+      .faq-item.open .faq-icon {
+        transform: rotate(45deg);
+        background: var(--or);
+        color: var(--noir);
+        border-color: var(--or);
+      }
+      .faq-a {
+        font-size: 14px;
+        color: var(--gris);
+        line-height: 1.8;
+        max-height: 0;
+        overflow: hidden;
+        transition:
+          max-height 0.4s ease,
+          padding 0.3s;
+      }
+      .faq-item.open .faq-a {
+        max-height: 200px;
+        padding-bottom: 24px;
+      }
 
-/* ═══════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════
    PAGE 4 — PACK COMPLET (UPSELL)
 ═══════════════════════════════════════════════ */
-#page-pack { background:var(--n1); }
+      #page-pack {
+        background: var(--n1);
+      }
 
-.pack-hero {
-  min-height:calc(100vh - 64px);
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  text-align:center; padding:80px 24px;
-  position:relative; overflow:hidden;
-}
-.pack-hero::before {
-  content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(201,168,76,0.06) 0%,transparent 65%);
-}
-.pack-hero h1 {
-  font-family:'Playfair Display',serif;
-  font-size:clamp(40px,7vw,80px);
-  line-height:1.0; font-weight:900; margin-bottom:16px;
-  position:relative; z-index:1;
-}
-.pack-hero h1 .l1 { display:block; }
-.pack-hero h1 .l2 { display:block; color:var(--or); font-style:italic; }
-.pack-hero-sub {
-  font-size:18px; color:rgba(248,246,240,0.6);
-  max-width:520px; margin:0 auto 52px; line-height:1.7;
-  position:relative; z-index:1;
-}
+      .pack-hero {
+        min-height: calc(100vh - 64px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 80px 24px;
+        position: relative;
+        overflow: hidden;
+      }
+      .pack-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 40%,
+          rgba(201, 168, 76, 0.06) 0%,
+          transparent 65%
+        );
+      }
+      .pack-hero h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(40px, 7vw, 80px);
+        line-height: 1;
+        font-weight: 900;
+        margin-bottom: 16px;
+        position: relative;
+        z-index: 1;
+      }
+      .pack-hero h1 .l1 {
+        display: block;
+      }
+      .pack-hero h1 .l2 {
+        display: block;
+        color: var(--or);
+        font-style: italic;
+      }
+      .pack-hero-sub {
+        font-size: 18px;
+        color: rgba(248, 246, 240, 0.6);
+        max-width: 520px;
+        margin: 0 auto 52px;
+        line-height: 1.7;
+        position: relative;
+        z-index: 1;
+      }
 
-/* Modules list */
-.pack-modules-section { padding:100px 0; background:var(--n2); }
-.pack-modules-list { display:flex; flex-direction:column; gap:3px; margin-top:60px; }
-.pack-mod-row {
-  display:grid; grid-template-columns:80px 1fr auto;
-  align-items:center; gap:24px;
-  background:var(--n3); padding:28px 32px;
-  border-left:3px solid transparent; transition:all 0.3s;
-}
-.pack-mod-row:hover { border-left-color:var(--or); background:var(--n4); }
-.pack-mod-row.highlight { border-left-color:var(--or); background:linear-gradient(90deg,rgba(201,168,76,0.06) 0%,var(--n3) 40%); }
-.pack-mod-num {
-  font-family:'Playfair Display',serif;
-  font-size:42px; font-weight:900; color:rgba(201,168,76,0.2);
-  text-align:center; line-height:1;
-}
-.pack-mod-info h3 { font-size:17px; font-weight:700; margin-bottom:4px; }
-.pack-mod-info p { font-size:13px; color:var(--gris); }
-.pack-mod-price {
-  font-family:'Playfair Display',serif;
-  font-size:24px; font-weight:700; color:var(--or);
-  white-space:nowrap; text-align:right;
-}
-.pack-mod-price.free-tag-price { color:var(--vert-l); font-size:16px; }
+      /* Modules list */
+      .pack-modules-section {
+        padding: 100px 0;
+        background: var(--n2);
+      }
+      .pack-modules-list {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        margin-top: 60px;
+      }
+      .pack-mod-row {
+        display: grid;
+        grid-template-columns: 80px 1fr auto;
+        align-items: center;
+        gap: 24px;
+        background: var(--n3);
+        padding: 28px 32px;
+        border-left: 3px solid transparent;
+        transition: all 0.3s;
+      }
+      .pack-mod-row:hover {
+        border-left-color: var(--or);
+        background: var(--n4);
+      }
+      .pack-mod-row.highlight {
+        border-left-color: var(--or);
+        background: linear-gradient(
+          90deg,
+          rgba(201, 168, 76, 0.06) 0%,
+          var(--n3) 40%
+        );
+      }
+      .pack-mod-num {
+        font-family: "Playfair Display", serif;
+        font-size: 42px;
+        font-weight: 900;
+        color: rgba(201, 168, 76, 0.2);
+        text-align: center;
+        line-height: 1;
+      }
+      .pack-mod-info h3 {
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .pack-mod-info p {
+        font-size: 13px;
+        color: var(--gris);
+      }
+      .pack-mod-price {
+        font-family: "Playfair Display", serif;
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--or);
+        white-space: nowrap;
+        text-align: right;
+      }
+      .pack-mod-price.free-tag-price {
+        color: var(--vert-l);
+        font-size: 16px;
+      }
 
-/* Valeur totale */
-.pack-value-section { padding:100px 0; background:var(--noir); }
-.value-card {
-  background:linear-gradient(135deg,var(--n2) 0%,var(--n3) 100%);
-  border:1px solid rgba(201,168,76,0.3); border-radius:6px;
-  padding:80px; text-align:center; position:relative; overflow:hidden;
-  max-width:800px; margin:0 auto;
-}
-.value-card::before {
-  content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(201,168,76,0.09) 0%,transparent 70%);
-}
-.value-vs {
-  display:grid; grid-template-columns:1fr auto 1fr;
-  align-items:center; gap:24px; margin:48px 0;
-  position:relative; z-index:1;
-}
-.value-side { text-align:center; }
-.value-side-label { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--gris); margin-bottom:12px; display:block; }
-.value-side-price {
-  font-family:'Playfair Display',serif;
-  font-size:56px; font-weight:900; line-height:1;
-}
-.value-old { color:rgba(248,246,240,0.3); text-decoration:line-through; }
-.value-new { color:var(--or); }
-.value-separator {
-  font-size:28px; color:var(--or); font-weight:700;
-}
-.value-economy {
-  background:rgba(26,92,42,0.2); border:1px solid rgba(26,152,90,0.3);
-  border-radius:4px; padding:16px 28px;
-  display:inline-block; font-size:15px; font-weight:600;
-  color:#6FCF97; margin-bottom:40px;
-  position:relative; z-index:1;
-}
-.value-features {
-  display:flex; flex-wrap:wrap; justify-content:center;
-  gap:14px; margin-bottom:48px;
-  position:relative; z-index:1;
-}
-.value-feat {
-  display:flex; align-items:center; gap:8px;
-  font-size:13px; color:rgba(248,246,240,0.8);
-}
-.value-feat::before { content:'✓'; color:var(--or); font-weight:700; }
+      /* Valeur totale */
+      .pack-value-section {
+        padding: 100px 0;
+        background: var(--noir);
+      }
+      .value-card {
+        background: linear-gradient(135deg, var(--n2) 0%, var(--n3) 100%);
+        border: 1px solid rgba(201, 168, 76, 0.3);
+        border-radius: 6px;
+        padding: 80px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .value-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 70% 50% at 50% 0%,
+          rgba(201, 168, 76, 0.09) 0%,
+          transparent 70%
+        );
+      }
+      .value-vs {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 24px;
+        margin: 48px 0;
+        position: relative;
+        z-index: 1;
+      }
+      .value-side {
+        text-align: center;
+      }
+      .value-side-label {
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--gris);
+        margin-bottom: 12px;
+        display: block;
+      }
+      .value-side-price {
+        font-family: "Playfair Display", serif;
+        font-size: 56px;
+        font-weight: 900;
+        line-height: 1;
+      }
+      .value-old {
+        color: rgba(248, 246, 240, 0.3);
+        text-decoration: line-through;
+      }
+      .value-new {
+        color: var(--or);
+      }
+      .value-separator {
+        font-size: 28px;
+        color: var(--or);
+        font-weight: 700;
+      }
+      .value-economy {
+        background: rgba(26, 92, 42, 0.2);
+        border: 1px solid rgba(26, 152, 90, 0.3);
+        border-radius: 4px;
+        padding: 16px 28px;
+        display: inline-block;
+        font-size: 15px;
+        font-weight: 600;
+        color: #6fcf97;
+        margin-bottom: 40px;
+        position: relative;
+        z-index: 1;
+      }
+      .value-features {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 14px;
+        margin-bottom: 48px;
+        position: relative;
+        z-index: 1;
+      }
+      .value-feat {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: rgba(248, 246, 240, 0.8);
+      }
+      .value-feat::before {
+        content: "✓";
+        color: var(--or);
+        font-weight: 700;
+      }
 
-/* Testimonials */
-.pack-social { padding:100px 0; background:var(--n1); }
-.testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:60px; }
-.testi-card {
-  background:var(--n2); padding:32px;
-  border-radius:2px; border-top:2px solid rgba(201,168,76,0.15);
-  transition:all 0.3s;
-}
-.testi-card:hover { border-top-color:var(--or); transform:translateY(-3px); }
-.testi-stars { color:var(--or); font-size:14px; margin-bottom:14px; letter-spacing:2px; }
-.testi-text { font-size:14px; color:rgba(248,246,240,0.8); line-height:1.7; font-style:italic; margin-bottom:20px; }
-.testi-author { display:flex; align-items:center; gap:12px; }
-.testi-avatar {
-  width:40px; height:40px; border-radius:50%;
-  background:linear-gradient(135deg,var(--or-d),var(--or));
-  display:flex; align-items:center; justify-content:center;
-  font-weight:700; font-size:14px; color:var(--noir); flex-shrink:0;
-}
-.testi-author-name { font-size:13px; font-weight:600; }
-.testi-author-role { font-size:11px; color:var(--gris); }
+      /* Testimonials */
+      .pack-social {
+        padding: 100px 0;
+        background: var(--n1);
+      }
+      .testi-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-top: 60px;
+      }
+      .testi-card {
+        background: var(--n2);
+        padding: 32px;
+        border-radius: 2px;
+        border-top: 2px solid rgba(201, 168, 76, 0.15);
+        transition: all 0.3s;
+      }
+      .testi-card:hover {
+        border-top-color: var(--or);
+        transform: translateY(-3px);
+      }
+      .testi-stars {
+        color: var(--or);
+        font-size: 14px;
+        margin-bottom: 14px;
+        letter-spacing: 2px;
+      }
+      .testi-text {
+        font-size: 14px;
+        color: rgba(248, 246, 240, 0.8);
+        line-height: 1.7;
+        font-style: italic;
+        margin-bottom: 20px;
+      }
+      .testi-author {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .testi-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--or-d), var(--or));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--noir);
+        flex-shrink: 0;
+      }
+      .testi-author-name {
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .testi-author-role {
+        font-size: 11px;
+        color: var(--gris);
+      }
 
-/* CTA final pack */
-.pack-cta-final {
-  padding:140px 0; background:var(--noir); text-align:center;
-}
-.pack-cta-final h2 {
-  font-family:'Playfair Display',serif;
-  font-size:clamp(38px,6vw,72px);
-  font-weight:900; margin-bottom:20px; line-height:1.05;
-}
-.pack-cta-final h2 em { color:var(--or); font-style:italic; }
-.pack-cta-final p { font-size:18px; color:var(--gris); max-width:480px; margin:0 auto 48px; }
+      /* CTA final pack */
+      .pack-cta-final {
+        padding: 140px 0;
+        background: var(--noir);
+        text-align: center;
+      }
+      .pack-cta-final h2 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(38px, 6vw, 72px);
+        font-weight: 900;
+        margin-bottom: 20px;
+        line-height: 1.05;
+      }
+      .pack-cta-final h2 em {
+        color: var(--or);
+        font-style: italic;
+      }
+      .pack-cta-final p {
+        font-size: 18px;
+        color: var(--gris);
+        max-width: 480px;
+        margin: 0 auto 48px;
+      }
 
-/* ═══════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════
    FOOTER
 ═══════════════════════════════════════════════ */
-.site-footer {
-  background:var(--n2); border-top:1px solid rgba(201,168,76,0.1);
-  padding:48px 24px; text-align:center;
-}
-.footer-brand {
-  font-family:'Playfair Display',serif;
-  font-size:22px; color:var(--or); margin-bottom:12px; font-weight:700;
-}
-.site-footer p { font-size:13px; color:var(--gris); }
+      .site-footer {
+        background: var(--n2);
+        border-top: 1px solid rgba(201, 168, 76, 0.1);
+        padding: 48px 24px;
+        text-align: center;
+      }
+      .footer-brand {
+        font-family: "Playfair Display", serif;
+        font-size: 22px;
+        color: var(--or);
+        margin-bottom: 12px;
+        font-weight: 700;
+      }
+      .site-footer p {
+        font-size: 13px;
+        color: var(--gris);
+      }
 
-/* ═══════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════════════ */
-@media(max-width:900px) {
-  .modules-grid { grid-template-columns:repeat(2,1fr); }
-  .free-hero { grid-template-columns:1fr; gap:40px; padding:60px 24px; }
-  .anatomy-split { grid-template-columns:1fr; }
-  .methods-grid { grid-template-columns:1fr; }
-  .m5-stats { grid-template-columns:repeat(2,1fr); }
-  .avantages-bento { grid-template-columns:repeat(2,1fr); }
-  .testi-grid { grid-template-columns:1fr; }
-  .value-vs { grid-template-columns:1fr; gap:12px; }
-  .pack-mod-row { grid-template-columns:60px 1fr; }
-  .pack-mod-price { grid-column:2; justify-self:start; }
-}
-@media(max-width:600px) {
-  .tunnel-nav { padding:0 16px; }
-  .tnav-steps { display:none; }
-  .modules-grid { grid-template-columns:1fr; }
-  .pack-card { padding:40px 20px; }
-  .m5-hero h1 { font-size:38px; }
-  .avantages-bento { grid-template-columns:1fr; }
-  .av-tile.wide { grid-column:span 1; }
-  .prix-option { padding:32px 24px; }
-  .prix-big { font-size:56px; }
-}
-</style>
-</head>
-<body>
+      @media (max-width: 900px) {
+        .modules-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .free-hero {
+          grid-template-columns: 1fr;
+          gap: 40px;
+          padding: 60px 24px;
+        }
+        .anatomy-split {
+          grid-template-columns: 1fr;
+        }
+        .methods-grid {
+          grid-template-columns: 1fr;
+        }
+        .m5-stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .avantages-bento {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .testi-grid {
+          grid-template-columns: 1fr;
+        }
+        .value-vs {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+        .pack-mod-row {
+          grid-template-columns: 60px 1fr;
+        }
+        .pack-mod-price {
+          grid-column: 2;
+          justify-self: start;
+        }
+      }
+      @media (max-width: 600px) {
+        .tunnel-nav {
+          padding: 0 16px;
+        }
+        .tnav-steps {
+          display: none;
+        }
+        .modules-grid {
+          grid-template-columns: 1fr;
+        }
+        .pack-card {
+          padding: 40px 20px;
+        }
+        .m5-hero h1 {
+          font-size: 38px;
+        }
+        .avantages-bento {
+          grid-template-columns: 1fr;
+        }
+        .av-tile.wide {
+          grid-column: span 1;
+        }
+        .prix-option {
+          padding: 32px 24px;
+        }
+        .prix-big {
+          font-size: 56px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- CURSEUR CUSTOM -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
 
-<!-- CURSEUR CUSTOM -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursor-ring"></div>
+    <!-- ═══════════════════════════ NAVIGATION ═══════════════════════════ -->
+    <nav class="tunnel-nav">
+      <a href="#" class="tnav-brand" onclick="showPage('home')"
+        >ÉLIXIR <span>ACADÉMIE</span></a
+      >
+      <div class="tnav-steps">
+        <a
+          class="tnav-step active"
+          id="step-home"
+          onclick="showPage('home')"
+          href="#"
+        >
+          <div class="tnav-step-dot">1</div>
+          <span class="tnav-step-label">Accueil</span>
+        </a>
+        <div class="tnav-connector"></div>
+        <a class="tnav-step" id="step-free" onclick="showPage('free')" href="#">
+          <div class="tnav-step-dot">2</div>
+          <span class="tnav-step-label">Gratuit</span>
+        </a>
+        <div class="tnav-connector"></div>
+        <a class="tnav-step" id="step-m5" onclick="showPage('m5')" href="#">
+          <div class="tnav-step-dot">3</div>
+          <span class="tnav-step-label">Module 5</span>
+        </a>
+        <div class="tnav-connector"></div>
+        <a class="tnav-step" id="step-pack" onclick="showPage('pack')" href="#">
+          <div class="tnav-step-dot">4</div>
+          <span class="tnav-step-label">Pack Complet</span>
+        </a>
+      </div>
+      <a
+        href="#"
+        class="tnav-cta"
+        onclick="
+          showPage('free');
+          return false;
+        "
+        >Commencer — Gratuit</a
+      >
+    </nav>
 
-<!-- ═══════════════════════════ NAVIGATION ═══════════════════════════ -->
-<nav class="tunnel-nav">
-  <a href="#" class="tnav-brand" onclick="showPage('home')">ÉLIXIR <span>ACADÉMIE</span></a>
-  <div class="tnav-steps">
-    <a class="tnav-step active" id="step-home" onclick="showPage('home')" href="#">
-      <div class="tnav-step-dot">1</div>
-      <span class="tnav-step-label">Accueil</span>
-    </a>
-    <div class="tnav-connector"></div>
-    <a class="tnav-step" id="step-free" onclick="showPage('free')" href="#">
-      <div class="tnav-step-dot">2</div>
-      <span class="tnav-step-label">Gratuit</span>
-    </a>
-    <div class="tnav-connector"></div>
-    <a class="tnav-step" id="step-m5" onclick="showPage('m5')" href="#">
-      <div class="tnav-step-dot">3</div>
-      <span class="tnav-step-label">Module 5</span>
-    </a>
-    <div class="tnav-connector"></div>
-    <a class="tnav-step" id="step-pack" onclick="showPage('pack')" href="#">
-      <div class="tnav-step-dot">4</div>
-      <span class="tnav-step-label">Pack Complet</span>
-    </a>
-  </div>
-  <a href="#" class="tnav-cta" onclick="showPage('free');return false;">Commencer — Gratuit</a>
-</nav>
-
-<!-- ═══════════════════════════════════════════════════════════════════
+    <!-- ═══════════════════════════════════════════════════════════════════
      PAGE 1 — ACCUEIL HUB
 ═══════════════════════════════════════════════════════════════════ -->
-<div class="page active" id="page-home">
-  <section class="hero">
-    <div class="hero-grid"></div>
-    <div class="hero-eyebrow"><div class="hero-eyebrow-dot"></div>Formation Professionnelle · 5 Modules</div>
-    <h1 class="reveal">
-      <span class="line1">Maîtrisez l'art</span>
-      <span class="line2">des extensions</span>
-      <span class="line3">capillaires.</span>
-    </h1>
-    <p class="hero-sub reveal">De la théorie aux techniques les plus avancées — kératine, loops, tape-in, Butterfly Weft. Apprenez à votre rythme, transformez votre passion en revenus.</p>
-    <div class="hero-actions reveal">
-      <button class="btn-gold" onclick="showPage('free')">Commencer gratuitement</button>
-      <button class="btn-ghost" onclick="scrollToModules()">Voir les modules ↓</button>
-    </div>
-    <div class="hero-proof reveal">
-      <div class="proof-item"><span class="proof-num">5</span><span class="proof-label">Modules complets</span></div>
-      <div class="proof-item"><span class="proof-num">4</span><span class="proof-label">Techniques maîtrisées</span></div>
-      <div class="proof-item"><span class="proof-num">∞</span><span class="proof-label">Accès à vie</span></div>
-      <div class="proof-item"><span class="proof-num">0</span><span class="proof-label">Prérequis</span></div>
-    </div>
-  </section>
-
-  <section class="modules-section" id="modules-anchor">
-    <div class="container">
-      <span class="section-label reveal">La formation complète</span>
-      <h2 class="section-title reveal">5 modules pour<br><em>tout maîtriser.</em></h2>
-      <div class="modules-grid reveal">
-
-        <a class="mod-card free" onclick="showPage('free');return false;" href="#">
-          <span class="mod-num">01</span>
-          <span class="mod-emoji">💎</span>
-          <h3>Les Fondamentaux</h3>
-          <span class="mod-tech">Le socle essentiel</span>
-          <ul class="mod-points">
-            <li>Anatomie et composition du cheveu</li>
-            <li>Les 3 phases de croissance</li>
-            <li>Choisir les bonnes mèches</li>
-            <li>Entretien & produits recommandés</li>
-            <li>Quiz (6 questions)</li>
-          </ul>
-          <div class="mod-price-free">Gratuit — accès immédiat</div>
-        </a>
-
-        <a class="mod-card" onclick="alert('Lien Gumroad Module 2 à configurer');return false;" href="#">
-          <span class="mod-num">02</span>
-          <span class="mod-emoji">🔥</span>
-          <h3>Extensions à Chaud</h3>
-          <span class="mod-tech">Kératine Fusion</span>
-          <ul class="mod-points">
-            <li>Kératine végétale expliquée</li>
-            <li>Pose pas à pas (6 étapes)</li>
-            <li>Erreurs fatales à éviter</li>
-            <li>Dépose & réutilisation</li>
-          </ul>
-          <div class="mod-price">39 € <sub>accès à vie</sub></div>
-        </a>
-
-        <a class="mod-card" onclick="alert('Lien Gumroad Module 3 à configurer');return false;" href="#">
-          <span class="mod-num">03</span>
-          <span class="mod-emoji">❄️</span>
-          <h3>Extensions à Froid</h3>
-          <span class="mod-tech">Loops & Anneaux</span>
-          <ul class="mod-points">
-            <li>Sans chaleur ni colle</li>
-            <li>Anneaux silicone & métal</li>
-            <li>Pose en quinconce</li>
-            <li>Trouver vos clientes</li>
-          </ul>
-          <div class="mod-price">39 € <sub>accès à vie</sub></div>
-        </a>
-
-        <a class="mod-card" onclick="alert('Lien Gumroad Module 4 à configurer');return false;" href="#">
-          <span class="mod-num">04</span>
-          <span class="mod-emoji">✨</span>
-          <h3>Extensions Adhésives</h3>
-          <span class="mod-tech">Tape-In</span>
-          <ul class="mod-points">
-            <li>Pose sandwich ultra-rapide</li>
-            <li>Bandes double face</li>
-            <li>Dépose sans dommages</li>
-            <li>Kit de recolle</li>
-          </ul>
-          <div class="mod-price">39 € <sub>accès à vie</sub></div>
-        </a>
-
-        <a class="mod-card new" onclick="showPage('m5');return false;" href="#">
-          <span class="mod-num">05</span>
-          <span class="mod-emoji">🦋</span>
-          <h3>Genius Butterfly Weft</h3>
-          <span class="mod-tech">Invisible · Sans colle</span>
-          <ul class="mod-points">
-            <li>Double trame + OVO Hole</li>
-            <li>3 méthodes de pose</li>
-            <li>Invisible en chignon</li>
-            <li>Tarif marché 250–400€</li>
-          </ul>
-          <div class="mod-price">39 € <sub>accès à vie</sub></div>
-        </a>
-
-      </div>
-    </div>
-  </section>
-
-  <section class="pack-section">
-    <div class="container">
-      <div class="pack-card reveal">
-        <div class="pack-badge">⭐ Meilleure valeur</div>
-        <h2 class="serif">Pack Formation Complète</h2>
-        <p class="pack-old">Valeur réelle : 156 €</p>
-        <div class="pack-price">129 €</div>
-        <p class="pack-price-sub">Les 5 modules · Accès à vie · Mises à jour incluses</p>
-        <div class="pack-features">
-          <div class="pack-feat">5 modules PDF complets</div>
-          <div class="pack-feat">Quiz dans chaque module</div>
-          <div class="pack-feat">Toutes les techniques</div>
-          <div class="pack-feat">Accès à vie</div>
-          <div class="pack-feat">Mises à jour gratuites</div>
+    <div class="page active" id="page-home">
+      <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-dot"></div>
+          Formation Professionnelle · 5 Modules
         </div>
-        <button class="btn-gold" onclick="showPage('pack')">Voir le pack complet →</button>
-        <div class="guarantee">🛡 Satisfaite ou remboursée — 14 jours</div>
-      </div>
+        <h1 class="reveal">
+          <span class="line1">Maîtrisez l'art</span>
+          <span class="line2">des extensions</span>
+          <span class="line3">capillaires.</span>
+        </h1>
+        <p class="hero-sub reveal">
+          De la théorie aux techniques les plus avancées — kératine, loops,
+          tape-in, Butterfly Weft. Apprenez à votre rythme, transformez votre
+          passion en revenus.
+        </p>
+        <div class="hero-actions reveal">
+          <button class="btn-gold" onclick="showPage('free')">
+            Commencer gratuitement
+          </button>
+          <button class="btn-ghost" onclick="scrollToModules()">
+            Voir les modules ↓
+          </button>
+        </div>
+        <div class="hero-proof reveal">
+          <div class="proof-item">
+            <span class="proof-num">5</span
+            ><span class="proof-label">Modules complets</span>
+          </div>
+          <div class="proof-item">
+            <span class="proof-num">4</span
+            ><span class="proof-label">Techniques maîtrisées</span>
+          </div>
+          <div class="proof-item">
+            <span class="proof-num">∞</span
+            ><span class="proof-label">Accès à vie</span>
+          </div>
+          <div class="proof-item">
+            <span class="proof-num">0</span
+            ><span class="proof-label">Prérequis</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="modules-section" id="modules-anchor">
+        <div class="container">
+          <span class="section-label reveal">La formation complète</span>
+          <h2 class="section-title reveal">
+            5 modules pour<br /><em>tout maîtriser.</em>
+          </h2>
+          <div class="modules-grid reveal">
+            <a
+              class="mod-card free"
+              onclick="
+                showPage('free');
+                return false;
+              "
+              href="#"
+            >
+              <span class="mod-num">01</span>
+              <span class="mod-emoji">💎</span>
+              <h3>Les Fondamentaux</h3>
+              <span class="mod-tech">Le socle essentiel</span>
+              <ul class="mod-points">
+                <li>Anatomie et composition du cheveu</li>
+                <li>Les 3 phases de croissance</li>
+                <li>Choisir les bonnes mèches</li>
+                <li>Entretien & produits recommandés</li>
+                <li>Quiz (6 questions)</li>
+              </ul>
+              <div class="mod-price-free">Gratuit — accès immédiat</div>
+            </a>
+
+            <a
+              class="mod-card"
+              onclick="
+                alert('Lien Gumroad Module 2 à configurer');
+                return false;
+              "
+              href="#"
+            >
+              <span class="mod-num">02</span>
+              <span class="mod-emoji">🔥</span>
+              <h3>Extensions à Chaud</h3>
+              <span class="mod-tech">Kératine Fusion</span>
+              <ul class="mod-points">
+                <li>Kératine végétale expliquée</li>
+                <li>Pose pas à pas (6 étapes)</li>
+                <li>Erreurs fatales à éviter</li>
+                <li>Dépose & réutilisation</li>
+              </ul>
+              <div class="mod-price">39 € <sub>accès à vie</sub></div>
+            </a>
+
+            <a
+              class="mod-card"
+              onclick="
+                alert('Lien Gumroad Module 3 à configurer');
+                return false;
+              "
+              href="#"
+            >
+              <span class="mod-num">03</span>
+              <span class="mod-emoji">❄️</span>
+              <h3>Extensions à Froid</h3>
+              <span class="mod-tech">Loops & Anneaux</span>
+              <ul class="mod-points">
+                <li>Sans chaleur ni colle</li>
+                <li>Anneaux silicone & métal</li>
+                <li>Pose en quinconce</li>
+                <li>Trouver vos clientes</li>
+              </ul>
+              <div class="mod-price">39 € <sub>accès à vie</sub></div>
+            </a>
+
+            <a
+              class="mod-card"
+              onclick="
+                alert('Lien Gumroad Module 4 à configurer');
+                return false;
+              "
+              href="#"
+            >
+              <span class="mod-num">04</span>
+              <span class="mod-emoji">✨</span>
+              <h3>Extensions Adhésives</h3>
+              <span class="mod-tech">Tape-In</span>
+              <ul class="mod-points">
+                <li>Pose sandwich ultra-rapide</li>
+                <li>Bandes double face</li>
+                <li>Dépose sans dommages</li>
+                <li>Kit de recolle</li>
+              </ul>
+              <div class="mod-price">39 € <sub>accès à vie</sub></div>
+            </a>
+
+            <a
+              class="mod-card new"
+              onclick="
+                showPage('m5');
+                return false;
+              "
+              href="#"
+            >
+              <span class="mod-num">05</span>
+              <span class="mod-emoji">🦋</span>
+              <h3>Genius Butterfly Weft</h3>
+              <span class="mod-tech">Invisible · Sans colle</span>
+              <ul class="mod-points">
+                <li>Double trame + OVO Hole</li>
+                <li>3 méthodes de pose</li>
+                <li>Invisible en chignon</li>
+                <li>Tarif marché 250–400€</li>
+              </ul>
+              <div class="mod-price">39 € <sub>accès à vie</sub></div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="pack-section">
+        <div class="container">
+          <div class="pack-card reveal">
+            <div class="pack-badge">⭐ Meilleure valeur</div>
+            <h2 class="serif">Pack Formation Complète</h2>
+            <p class="pack-old">Valeur réelle : 156 €</p>
+            <div class="pack-price">129 €</div>
+            <p class="pack-price-sub">
+              Les 5 modules · Accès à vie · Mises à jour incluses
+            </p>
+            <div class="pack-features">
+              <div class="pack-feat">5 modules PDF complets</div>
+              <div class="pack-feat">Quiz dans chaque module</div>
+              <div class="pack-feat">Toutes les techniques</div>
+              <div class="pack-feat">Accès à vie</div>
+              <div class="pack-feat">Mises à jour gratuites</div>
+              </div>
+              <button class="btn-gold" onclick="showPage('pack')" style="position: relative; z-index: 10001; cursor: pointer;">
+                Voir le pack complet →
+              </button>
+              <div class="guarantee">🛡 Satisfaite ou remboursée — 14 jours</div>
+              </div>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <div class="footer-brand">ÉLIXIR ACADÉMIE</div>
+        <p>
+          Formation Professionnelle Extensions Capillaires · elixir-academie.fr
+        </p>
+      </footer>
     </div>
-  </section>
 
-  <footer class="site-footer">
-    <div class="footer-brand">ÉLIXIR ACADÉMIE</div>
-    <p>Formation Professionnelle Extensions Capillaires · elixir-academie.fr</p>
-  </footer>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════════
+    <!-- ═══════════════════════════════════════════════════════════════════
      PAGE 2 — MODULE 1 GRATUIT
 ═══════════════════════════════════════════════════════════════════ -->
-<div class="page" id="page-free">
-  <div class="free-hero">
-    <div class="free-hero-left reveal-l">
-      <div class="free-tag">Module 1 — Accès immédiat</div>
-      <h1>Commencez<br>avec les <em>bases solides.</em></h1>
-      <p>Avant de poser votre première extension, vous devez comprendre la matière avec laquelle vous travaillez. Ce module gratuit vous donne ce socle.</p>
-      <div class="free-includes">
-        <div class="free-include"><span class="free-include-icon">💎</span><div class="free-include-text"><h4>Anatomie du cheveu</h4><p>Composition, structure, kératine — tout ce qu'il faut savoir avant de toucher une mèche.</p></div></div>
-        <div class="free-include"><span class="free-include-icon">🔄</span><div class="free-include-text"><h4>Les 3 phases de croissance</h4><p>Anagène, catagène, télogène. Comprendre le cycle pour mieux conseiller vos clientes.</p></div></div>
-        <div class="free-include"><span class="free-include-icon">⚖️</span><div class="free-include-text"><h4>Choisir les bonnes mèches</h4><p>Grammage, couleur, texture, naturelles vs synthétiques. Le guide complet.</p></div></div>
-        <div class="free-include"><span class="free-include-icon">🌿</span><div class="free-include-text"><h4>Entretien & produits</h4><p>Ce qu'il faut recommander à vos clientes. Ce qu'il faut éviter absolument.</p></div></div>
-        <div class="free-include"><span class="free-include-icon">❓</span><div class="free-include-text"><h4>Quiz d'auto-évaluation</h4><p>6 questions pour valider vos acquis avant de passer à la pratique.</p></div></div>
+    <div class="page" id="page-free">
+      <div class="free-hero">
+        <div class="free-hero-left reveal-l">
+          <div class="free-tag">Module 1 — Accès immédiat</div>
+          <h1>Commencez<br />avec les <em>bases solides.</em></h1>
+          <p>
+            Avant de poser votre première extension, vous devez comprendre la
+            matière avec laquelle vous travaillez. Ce module gratuit vous donne
+            ce socle.
+          </p>
+          <div class="free-includes">
+            <div class="free-include">
+              <span class="free-include-icon">💎</span>
+              <div class="free-include-text">
+                <h4>Anatomie du cheveu</h4>
+                <p>
+                  Composition, structure, kératine — tout ce qu'il faut savoir
+                  avant de toucher une mèche.
+                </p>
+              </div>
+            </div>
+            <div class="free-include">
+              <span class="free-include-icon">🔄</span>
+              <div class="free-include-text">
+                <h4>Les 3 phases de croissance</h4>
+                <p>
+                  Anagène, catagène, télogène. Comprendre le cycle pour mieux
+                  conseiller vos clientes.
+                </p>
+              </div>
+            </div>
+            <div class="free-include">
+              <span class="free-include-icon">⚖️</span>
+              <div class="free-include-text">
+                <h4>Choisir les bonnes mèches</h4>
+                <p>
+                  Grammage, couleur, texture, naturelles vs synthétiques. Le
+                  guide complet.
+                </p>
+              </div>
+            </div>
+            <div class="free-include">
+              <span class="free-include-icon">🌿</span>
+              <div class="free-include-text">
+                <h4>Entretien & produits</h4>
+                <p>
+                  Ce qu'il faut recommander à vos clientes. Ce qu'il faut éviter
+                  absolument.
+                </p>
+              </div>
+            </div>
+            <div class="free-include">
+              <span class="free-include-icon">❓</span>
+              <div class="free-include-text">
+                <h4>Quiz d'auto-évaluation</h4>
+                <p>
+                  6 questions pour valider vos acquis avant de passer à la
+                  pratique.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card reveal-r">
+          <h2>Recevoir le Module 1</h2>
+          <p>
+            Entrez votre prénom et email pour recevoir le PDF gratuitement.
+            Accès immédiat, aucune carte bancaire requise.
+          </p>
+          <div class="form-field">
+            <label>Votre prénom</label>
+            <input type="text" placeholder="Marie" id="input-prenom" />
+          </div>
+          <div class="form-field">
+            <label>Votre email</label>
+            <input
+              type="email"
+              placeholder="marie@email.com"
+              id="input-email"
+            />
+          </div>
+          <button class="form-submit" onclick="handleFreeDownload()">
+            Recevoir le Module 1 gratuitement →
+          </button>
+          <div class="form-privacy">
+            Vos données sont confidentielles. Aucun spam.
+          </div>
+        </div>
       </div>
+
+      <section class="free-next">
+        <div class="container">
+          <span class="section-label reveal">La suite vous attend</span>
+          <h2 class="section-title reveal">
+            Après les fondamentaux,<br /><em>choisissez votre technique.</em>
+          </h2>
+          <div class="free-next-modules reveal">
+            <div class="fnm-card" onclick="alert('Module 2 — Lien Gumroad')">
+              <span class="fnm-emoji">🔥</span>
+              <h4>Kératine Fusion</h4>
+              <span>39 €</span>
+            </div>
+            <div class="fnm-card" onclick="alert('Module 3 — Lien Gumroad')">
+              <span class="fnm-emoji">❄️</span>
+              <h4>Loops & Anneaux</h4>
+              <span>39 €</span>
+            </div>
+            <div class="fnm-card" onclick="alert('Module 4 — Lien Gumroad')">
+              <span class="fnm-emoji">✨</span>
+              <h4>Tape-In</h4>
+              <span>39 €</span>
+            </div>
+            <div class="fnm-card" onclick="showPage('m5')">
+              <span class="fnm-emoji">🦋</span>
+              <h4>Butterfly Weft</h4>
+              <span>39 €</span>
+            </div>
+          </div>
+          <p style="color: var(--gris); margin-bottom: 28px; font-size: 15px">
+            Ou économisez 27 € avec le pack complet.
+          </p>
+          <button class="btn-gold" onclick="showPage('pack')">
+            Voir le pack 5 modules — 129 €
+          </button>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <div class="footer-brand">ÉLIXIR ACADÉMIE</div>
+        <p>
+          Formation Professionnelle Extensions Capillaires · elixir-academie.fr
+        </p>
+      </footer>
     </div>
 
-    <div class="form-card reveal-r">
-      <h2>Recevoir le Module 1</h2>
-      <p>Entrez votre prénom et email pour recevoir le PDF gratuitement. Accès immédiat, aucune carte bancaire requise.</p>
-      <div class="form-field">
-        <label>Votre prénom</label>
-        <input type="text" placeholder="Marie" id="input-prenom">
-      </div>
-      <div class="form-field">
-        <label>Votre email</label>
-        <input type="email" placeholder="marie@email.com" id="input-email">
-      </div>
-      <button class="form-submit" onclick="handleFreeDownload()">Recevoir le Module 1 gratuitement →</button>
-      <div class="form-privacy">Vos données sont confidentielles. Aucun spam.</div>
-    </div>
-  </div>
-
-  <section class="free-next">
-    <div class="container">
-      <span class="section-label reveal">La suite vous attend</span>
-      <h2 class="section-title reveal">Après les fondamentaux,<br><em>choisissez votre technique.</em></h2>
-      <div class="free-next-modules reveal">
-        <div class="fnm-card" onclick="alert('Module 2 — Lien Gumroad')">
-          <span class="fnm-emoji">🔥</span>
-          <h4>Kératine Fusion</h4>
-          <span>39 €</span>
-        </div>
-        <div class="fnm-card" onclick="alert('Module 3 — Lien Gumroad')">
-          <span class="fnm-emoji">❄️</span>
-          <h4>Loops & Anneaux</h4>
-          <span>39 €</span>
-        </div>
-        <div class="fnm-card" onclick="alert('Module 4 — Lien Gumroad')">
-          <span class="fnm-emoji">✨</span>
-          <h4>Tape-In</h4>
-          <span>39 €</span>
-        </div>
-        <div class="fnm-card" onclick="showPage('m5')">
-          <span class="fnm-emoji">🦋</span>
-          <h4>Butterfly Weft</h4>
-          <span>39 €</span>
-        </div>
-      </div>
-      <p style="color:var(--gris);margin-bottom:28px;font-size:15px;">Ou économisez 27 € avec le pack complet.</p>
-      <button class="btn-gold" onclick="showPage('pack')">Voir le pack 5 modules — 129 €</button>
-    </div>
-  </section>
-
-  <footer class="site-footer">
-    <div class="footer-brand">ÉLIXIR ACADÉMIE</div>
-    <p>Formation Professionnelle Extensions Capillaires · elixir-academie.fr</p>
-  </footer>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════════
+    <!-- ═══════════════════════════════════════════════════════════════════
      PAGE 3 — MODULE 5 BUTTERFLY WEFT
 ═══════════════════════════════════════════════════════════════════ -->
-<div class="page" id="page-m5">
-  <section class="m5-hero">
-    <div class="m5-nouveau">✦ Nouveauté 2025</div>
-    <span class="m5-hero-emoji">🦋</span>
-    <h1>
-      <span class="t1">Genius Butterfly Weft</span>
-      <span class="t2">La pose invisible.</span>
-    </h1>
-    <p class="m5-hero-promise">« Pour la première fois, mes clientes portent leurs extensions en chignon. »</p>
-    <p class="m5-hero-sub">Sans colle · Sans chaleur · Invisible même attaché · 15 min de pose</p>
-    <div class="m5-hero-actions">
-      <button class="btn-gold" onclick="document.getElementById('m5-prix').scrollIntoView({behavior:'smooth'})">Accéder au module — 39 €</button>
-      <button class="btn-ghost" onclick="document.getElementById('m5-anatomy').scrollIntoView({behavior:'smooth'})">Découvrir la technique ↓</button>
-    </div>
-    <div class="m5-stats container">
-      <div class="m5-stat"><span class="m5-stat-num">0</span><span class="m5-stat-label">Colle ni chaleur</span></div>
-      <div class="m5-stat"><span class="m5-stat-num">15'</span><span class="m5-stat-label">Pose complète</span></div>
-      <div class="m5-stat"><span class="m5-stat-num">14</span><span class="m5-stat-label">Sections de cours</span></div>
-      <div class="m5-stat"><span class="m5-stat-num">360°</span><span class="m5-stat-label">Invisible</span></div>
-    </div>
-  </section>
+    <div class="page" id="page-m5">
+      <section class="m5-hero">
+        <div class="m5-nouveau">✦ Nouveauté 2025</div>
+        <span class="m5-hero-emoji">🦋</span>
+        <h1>
+          <span class="t1">Genius Butterfly Weft</span>
+          <span class="t2">La pose invisible.</span>
+        </h1>
+        <p class="m5-hero-promise">
+          « Pour la première fois, mes clientes portent leurs extensions en
+          chignon. »
+        </p>
+        <p class="m5-hero-sub">
+          Sans colle · Sans chaleur · Invisible même attaché · 15 min de pose
+        </p>
+        <div class="m5-hero-actions">
+          <button
+            class="btn-gold"
+            onclick="
+              document
+                .getElementById('m5-prix')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            Accéder au module — 39 €
+          </button>
+          <button
+            class="btn-ghost"
+            onclick="
+              document
+                .getElementById('m5-anatomy')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            Découvrir la technique ↓
+          </button>
+        </div>
+        <div class="m5-stats container">
+          <div class="m5-stat">
+            <span class="m5-stat-num">0</span
+            ><span class="m5-stat-label">Colle ni chaleur</span>
+          </div>
+          <div class="m5-stat">
+            <span class="m5-stat-num">15'</span
+            ><span class="m5-stat-label">Pose complète</span>
+          </div>
+          <div class="m5-stat">
+            <span class="m5-stat-num">14</span
+            ><span class="m5-stat-label">Sections de cours</span>
+          </div>
+          <div class="m5-stat">
+            <span class="m5-stat-num">360°</span
+            ><span class="m5-stat-label">Invisible</span>
+          </div>
+        </div>
+      </section>
 
-  <section class="m5-anatomy" id="m5-anatomy">
-    <div class="container">
-      <span class="section-label reveal">Comprendre la technique</span>
-      <h2 class="section-title reveal">Comment fonctionne<br><em>le trou PU central ?</em></h2>
-      <div class="anatomy-split">
-        <div class="anatomy-visual-card reveal-l">
-          <h3 class="serif" style="font-size:22px;margin-bottom:8px">Anatomie d'une mèche</h3>
-          <div class="gold-bar-l" style="margin-bottom:24px"></div>
-          <div class="weft-viz">
-            <div class="weft-layer">TRAME SUPÉRIEURE (Genius Weft)</div>
-            <div style="text-align:center;font-size:10px;color:var(--gris);letter-spacing:2px;text-transform:uppercase;padding:4px 0">← GAP CENTRAL (OVO HOLE) →</div>
-            <div class="weft-gap-zone">
-              <div class="pu-hole-viz">PU<br>TROU</div>
-              <div class="ring-viz">ANNEAU<br>SILICONE</div>
+      <section class="m5-anatomy" id="m5-anatomy">
+        <div class="container">
+          <span class="section-label reveal">Comprendre la technique</span>
+          <h2 class="section-title reveal">
+            Comment fonctionne<br /><em>le trou PU central ?</em>
+          </h2>
+          <div class="anatomy-split">
+            <div class="anatomy-visual-card reveal-l">
+              <h3 class="serif" style="font-size: 22px; margin-bottom: 8px">
+                Anatomie d'une mèche
+              </h3>
+              <div class="gold-bar-l" style="margin-bottom: 24px"></div>
+              <div class="weft-viz">
+                <div class="weft-layer">TRAME SUPÉRIEURE (Genius Weft)</div>
+                <div
+                  style="
+                    text-align: center;
+                    font-size: 10px;
+                    color: var(--gris);
+                    letter-spacing: 2px;
+                    text-transform: uppercase;
+                    padding: 4px 0;
+                  "
+                >
+                  ← GAP CENTRAL (OVO HOLE) →
+                </div>
+                <div class="weft-gap-zone">
+                  <div class="pu-hole-viz">PU<br />TROU</div>
+                  <div class="ring-viz">ANNEAU<br />SILICONE</div>
+                </div>
+                <div
+                  style="
+                    text-align: center;
+                    font-size: 10px;
+                    color: var(--gris);
+                    letter-spacing: 2px;
+                    text-transform: uppercase;
+                    padding: 4px 0;
+                  "
+                >
+                  ← GAP CENTRAL (OVO HOLE) →
+                </div>
+                <div class="weft-layer">TRAME INFÉRIEURE (Genius Weft)</div>
+                <div class="weft-hair"></div>
+                <div class="weft-hair-label">Cheveux naturels</div>
+              </div>
+              <div
+                style="
+                  background: rgba(201, 168, 76, 0.07);
+                  border-left: 2px solid var(--or);
+                  padding: 12px 16px;
+                  font-size: 12px;
+                  color: var(--or-l);
+                  font-style: italic;
+                  margin-top: 16px;
+                  border-radius: 0 2px 2px 0;
+                "
+              >
+                ✦ L'anneau disparaît entre les deux trames — invisible sous tous
+                les angles.
+              </div>
             </div>
-            <div style="text-align:center;font-size:10px;color:var(--gris);letter-spacing:2px;text-transform:uppercase;padding:4px 0">← GAP CENTRAL (OVO HOLE) →</div>
-            <div class="weft-layer">TRAME INFÉRIEURE (Genius Weft)</div>
-            <div class="weft-hair"></div>
-            <div class="weft-hair-label">Cheveux naturels</div>
+            <div class="anatomy-points reveal-r">
+              <div class="anat-point">
+                <span class="anat-point-key">Trame supérieure</span
+                ><span class="anat-point-val"
+                  >Tissée main, 0,1 cm d'épaisseur. Lie à plat contre le cuir
+                  chevelu, invisible sous les cheveux naturels.</span
+                >
+              </div>
+              <div class="anat-point">
+                <span class="anat-point-key">Gap OVO Central</span
+                ><span class="anat-point-val"
+                  >Espace perforé entre les deux trames. Zone d'ancrage
+                  invisible où passent les cheveux naturels et l'anneau
+                  silicone.</span
+                >
+              </div>
+              <div class="anat-point">
+                <span class="anat-point-key">Film PU perforé</span
+                ><span class="anat-point-val"
+                  >Pellicule transparente heat-sealed, micro-trouée. Assure
+                  respirabilité, souplesse et résistance à la découpe.</span
+                >
+              </div>
+              <div class="anat-point">
+                <span class="anat-point-key">Trame inférieure</span
+                ><span class="anat-point-val"
+                  >Seconde trame identique. Crée le volume et dissimule
+                  complètement l'anneau par le dessous.</span
+                >
+              </div>
+              <div class="anat-point">
+                <span class="anat-point-key">Cheveux Remy</span
+                ><span class="anat-point-val"
+                  >100% cheveux humains, cuticules alignées. Se coiffe, se
+                  lisse, se boucle exactement comme vos propres cheveux.</span
+                >
+              </div>
+            </div>
           </div>
-          <div style="background:rgba(201,168,76,0.07);border-left:2px solid var(--or);padding:12px 16px;font-size:12px;color:var(--or-l);font-style:italic;margin-top:16px;border-radius:0 2px 2px 0">
-            ✦ L'anneau disparaît entre les deux trames — invisible sous tous les angles.
+        </div>
+      </section>
+
+      <section class="m5-methods">
+        <div class="container">
+          <span class="section-label reveal">Ce que vous apprendrez</span>
+          <h2 class="section-title reveal">
+            3 méthodes de pose<br /><em>pour tous les niveaux.</em>
+          </h2>
+          <div class="methods-grid">
+            <div class="method-card best reveal">
+              <span class="method-emoji">🔵</span>
+              <h3>Micro-Anneaux</h3>
+              <span class="method-level lvl-beginner">Débutant+</span>
+              <p class="method-desc">
+                L'anneau silicone est glissé directement dans le trou PU
+                central. Aucune couture, aucune chaleur. La méthode la plus
+                rapide et accessible.
+              </p>
+              <div class="method-time">⏱ 15 à 30 min · Tête complète</div>
+            </div>
+            <div class="method-card reveal">
+              <span class="method-emoji">🟡</span>
+              <h3>Beaded Row</h3>
+              <span class="method-level lvl-pro">Professionnel</span>
+              <p class="method-desc">
+                Rangée de perles cousue sur les cheveux naturels, puis la mèche
+                est cousue sur la rangée. Ancrage maximal pour cheveux épais.
+              </p>
+              <div class="method-time">⏱ 60 à 90 min · Tenue 6–8 semaines</div>
+            </div>
+            <div class="method-card reveal">
+              <span class="method-emoji">⭐</span>
+              <h3>Invisible Beaded Row</h3>
+              <span class="method-level lvl-expert">Premium</span>
+              <p class="method-desc">
+                Deux mèches sandwichent la rangée de perles. Invisible sous tous
+                les angles — même en chignon serré. La technique haut de gamme.
+              </p>
+              <div class="method-time">⏱ 90 à 120 min · Résultat inégalé</div>
+            </div>
           </div>
         </div>
-        <div class="anatomy-points reveal-r">
-          <div class="anat-point"><span class="anat-point-key">Trame supérieure</span><span class="anat-point-val">Tissée main, 0,1 cm d'épaisseur. Lie à plat contre le cuir chevelu, invisible sous les cheveux naturels.</span></div>
-          <div class="anat-point"><span class="anat-point-key">Gap OVO Central</span><span class="anat-point-val">Espace perforé entre les deux trames. Zone d'ancrage invisible où passent les cheveux naturels et l'anneau silicone.</span></div>
-          <div class="anat-point"><span class="anat-point-key">Film PU perforé</span><span class="anat-point-val">Pellicule transparente heat-sealed, micro-trouée. Assure respirabilité, souplesse et résistance à la découpe.</span></div>
-          <div class="anat-point"><span class="anat-point-key">Trame inférieure</span><span class="anat-point-val">Seconde trame identique. Crée le volume et dissimule complètement l'anneau par le dessous.</span></div>
-          <div class="anat-point"><span class="anat-point-key">Cheveux Remy</span><span class="anat-point-val">100% cheveux humains, cuticules alignées. Se coiffe, se lisse, se boucle exactement comme vos propres cheveux.</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <section class="m5-methods">
-    <div class="container">
-      <span class="section-label reveal">Ce que vous apprendrez</span>
-      <h2 class="section-title reveal">3 méthodes de pose<br><em>pour tous les niveaux.</em></h2>
-      <div class="methods-grid">
-        <div class="method-card best reveal">
-          <span class="method-emoji">🔵</span>
-          <h3>Micro-Anneaux</h3>
-          <span class="method-level lvl-beginner">Débutant+</span>
-          <p class="method-desc">L'anneau silicone est glissé directement dans le trou PU central. Aucune couture, aucune chaleur. La méthode la plus rapide et accessible.</p>
-          <div class="method-time">⏱ 15 à 30 min · Tête complète</div>
-        </div>
-        <div class="method-card reveal">
-          <span class="method-emoji">🟡</span>
-          <h3>Beaded Row</h3>
-          <span class="method-level lvl-pro">Professionnel</span>
-          <p class="method-desc">Rangée de perles cousue sur les cheveux naturels, puis la mèche est cousue sur la rangée. Ancrage maximal pour cheveux épais.</p>
-          <div class="method-time">⏱ 60 à 90 min · Tenue 6–8 semaines</div>
-        </div>
-        <div class="method-card reveal">
-          <span class="method-emoji">⭐</span>
-          <h3>Invisible Beaded Row</h3>
-          <span class="method-level lvl-expert">Premium</span>
-          <p class="method-desc">Deux mèches sandwichent la rangée de perles. Invisible sous tous les angles — même en chignon serré. La technique haut de gamme.</p>
-          <div class="method-time">⏱ 90 à 120 min · Résultat inégalé</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="m5-steps">
-    <div class="container">
-      <span class="section-label reveal">Méthode principale</span>
-      <h2 class="section-title reveal">Pose micro-anneaux<br><em>étape par étape.</em></h2>
-      <div class="steps-timeline reveal">
-        <div class="step-row"><div class="step-num-col"><div class="step-n">1</div></div><div class="step-content-col"><h4>Première ligne de travail</h4><p>Séparation horizontale à la nuque, cheveux relevés et fixés. Base de travail propre et dégagée.</p></div></div>
-        <div class="step-row"><div class="step-num-col"><div class="step-n">2</div></div><div class="step-content-col"><h4>Mesure et découpe</h4><p>Mesurer la mèche contre la section. Le Genius Weft se coupe proprement sans s'effilocher — avantage unique.</p><div class="step-tip">✦ Vérifier la position des trous PU avant de couper.</div></div></div>
-        <div class="step-row"><div class="step-num-col"><div class="step-n">3</div></div><div class="step-content-col"><h4>Insertion dans le trou PU</h4><p>Le crochet-lasso traverse le trou PU de bas en haut, accroche la section de cheveux naturels et les fait passer à travers.</p></div></div>
-        <div class="step-row"><div class="step-num-col"><div class="step-n">4</div></div><div class="step-content-col"><h4>Mise en place de l'anneau</h4><p>Glisser le micro-anneau silicone sur les cheveux déjà passés dans le trou. Positionner à 1 cm du cuir chevelu, dans le gap central.</p><div class="step-tip">✦ L'anneau doit être entre les deux trames — ni au-dessus ni en dessous.</div></div></div>
-        <div class="step-row"><div class="step-num-col"><div class="step-n">5</div></div><div class="step-content-col"><h4>Fermeture</h4><p>Un seul clic avec la pince. Ne pas sur-serrer — la tenue est assurée par la forme de l'anneau, pas par la pression.</p></div></div>
-        <div class="step-row"><div class="step-num-col"><div class="step-n">6</div></div><div class="step-content-col"><h4>Pose en quinconce et finition</h4><p>Décaler les anneaux d'une ligne à l'autre pour un rendu naturel. Vérifier la discrétion sous tous les angles.</p></div></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="m5-avantages">
-    <div class="container">
-      <span class="section-label reveal">Pourquoi cette technique</span>
-      <h2 class="section-title reveal">8 raisons de la<br><em>maîtriser maintenant.</em></h2>
-      <div class="avantages-bento reveal">
-        <div class="av-tile wide"><span class="av-tile-icon">👁️</span><h3>Discrétion maximale</h3><p>L'anneau est caché entre les deux trames. Invisible en chignon, queue de cheval, tresse. Aucune autre technique n'atteint ce niveau.</p></div>
-        <div class="av-tile"><span class="av-tile-icon">🚫</span><h3>Sans colle ni chaleur</h3><p>Zéro risque thermique ou chimique. Respectueux des cheveux les plus fragiles.</p></div>
-        <div class="av-tile"><span class="av-tile-icon">⚡</span><h3>Pose rapide</h3><p>Une tête complète en 15 à 30 min. Rentabilité immédiate.</p></div>
-        <div class="av-tile"><span class="av-tile-icon">✂️</span><h3>Découpable sans effilocher</h3><p>Le Genius Weft se coupe proprement à n'importe quelle largeur. Adaptable à chaque cliente.</p></div>
-        <div class="av-tile"><span class="av-tile-icon">🌬️</span><h3>Respirabilité</h3><p>Film PU perforé. Ventilation garantie. Confort même en sport ou en été.</p></div>
-        <div class="av-tile"><span class="av-tile-icon">🔄</span><h3>Réutilisable</h3><p>Déposez, nettoyez, reposez. Économique sur le long terme.</p></div>
-        <div class="av-tile"><span class="av-tile-icon">💪</span><h3>Tous types de cheveux</h3><p>Fins, épais, bouclés, colorés. La structure double-trame s'adapte à tout.</p></div>
-        <div class="av-tile"><span class="av-tile-icon">💰</span><h3>Tarif premium</h3><p>250 à 400 € la pose en salon. Avec ce module, vous êtes sur ce segment dès aujourd'hui.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="m5-comp">
-    <div class="container">
-      <span class="section-label reveal">Comparatif</span>
-      <h2 class="section-title reveal">Butterfly Weft vs<br><em>les autres techniques.</em></h2>
-      <div class="comp-wrap reveal">
-        <table class="comp-tbl">
-          <thead>
-            <tr>
-              <th>Critère</th>
-              <th>Kératine</th>
-              <th>Loops</th>
-              <th>Tape-In</th>
-              <th class="butterfly-col">🦋 Butterfly</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>Chaleur requise</td><td>Oui</td><td>Non</td><td>Non</td><td class="butterfly-col">Non ✓</td></tr>
-            <tr><td>Colle</td><td>Oui</td><td>Non</td><td>Oui</td><td class="butterfly-col">Non ✓</td></tr>
-            <tr><td>Visible cheveux attachés</td><td>Parfois</td><td>Parfois</td><td>Oui</td><td class="butterfly-col">Non ✓✓</td></tr>
-            <tr><td>Durée de pose</td><td>1–2h</td><td>30–60min</td><td>15–30min</td><td class="butterfly-col">15–30min ✓</td></tr>
-            <tr><td>Cheveux fins</td><td>Possible</td><td>Très bien</td><td>Attention</td><td class="butterfly-col">Excellent ✓</td></tr>
-            <tr><td>Sport / piscine</td><td>Possible</td><td>Possible</td><td>Difficile</td><td class="butterfly-col">Parfait ✓</td></tr>
-            <tr><td>Tarif marché</td><td>80–200€</td><td>60–150€</td><td>60–150€</td><td class="butterfly-col">250–400€ ✓</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <section class="m5-faq">
-    <div class="container-sm">
-      <span class="section-label reveal">Questions fréquentes</span>
-      <h2 class="section-title reveal">Vos questions,<br><em>mes réponses.</em></h2>
-      <div class="faq-accordion reveal">
-        <div class="faq-item"><button class="faq-q">Faut-il un diplôme pour pratiquer le Butterfly Weft ?<span class="faq-icon">+</span></button><div class="faq-a">Non pour la méthode micro-anneaux. Les méthodes Beaded Row et Invisible Beaded Row nécessitent une maîtrise de la couture sur cheveux, conseillée après pratique régulière.</div></div>
-        <div class="faq-item"><button class="faq-q">Combien de temps durent ces extensions ?<span class="faq-icon">+</span></button><div class="faq-a">2 à 4 mois avec un entretien adapté. Les mèches peuvent être reposées plusieurs fois après nettoyage et remplacement des anneaux — rentable pour la cliente comme pour vous.</div></div>
-        <div class="faq-item"><button class="faq-q">Où acheter les mèches Genius Butterfly Weft ?<span class="faq-icon">+</span></button><div class="faq-a">Le module inclut une section fournisseurs détaillée avec références recommandées, du haut de gamme à l'entrée de gamme. Vous saurez exactement quoi commander avant votre première pose.</div></div>
-        <div class="faq-item"><button class="faq-q">Combien facturer une pose ?<span class="faq-icon">+</span></button><div class="faq-a">Les tarifs marché se situent entre 150 € (débutante qui construit son portfolio) et 400 € (professionnelle expérimentée). Le retour sur investissement de la formation est immédiat.</div></div>
-        <div class="faq-item"><button class="faq-q">Comment accéder au module après achat ?<span class="faq-icon">+</span></button><div class="faq-a">Immédiatement après paiement via Gumroad ou Stan.store, vous recevez un lien de téléchargement par email. Accès instantané, 24h/24, à vie.</div></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="m5-prix" id="m5-prix">
-    <div class="container">
-      <span class="section-label" style="display:block;text-align:center">Accès au module</span>
-      <h2 class="section-title" style="text-align:center">Choisissez votre<br><em>formule.</em></h2>
-      <div class="prix-stack">
-        <div class="prix-option reveal">
-          <div class="prix-option-title">Module 5 seul</div>
-          <span class="prix-big">39 €</span>
-          <p class="prix-option-sub">Accès à vie · Téléchargement immédiat</p>
-          <div class="prix-option-includes">
-            <div class="prix-option-include">Module PDF complet — 14 sections</div>
-            <div class="prix-option-include">3 méthodes de pose détaillées</div>
-            <div class="prix-option-include">Erreurs à éviter + entretien + dépose</div>
-            <div class="prix-option-include">Quiz 8 questions + mises à jour à vie</div>
+      <section class="m5-steps">
+        <div class="container">
+          <span class="section-label reveal">Méthode principale</span>
+          <h2 class="section-title reveal">
+            Pose micro-anneaux<br /><em>étape par étape.</em>
+          </h2>
+          <div class="steps-timeline reveal">
+            <div class="step-row">
+              <div class="step-num-col"><div class="step-n">1</div></div>
+              <div class="step-content-col">
+                <h4>Première ligne de travail</h4>
+                <p>
+                  Séparation horizontale à la nuque, cheveux relevés et fixés.
+                  Base de travail propre et dégagée.
+                </p>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num-col"><div class="step-n">2</div></div>
+              <div class="step-content-col">
+                <h4>Mesure et découpe</h4>
+                <p>
+                  Mesurer la mèche contre la section. Le Genius Weft se coupe
+                  proprement sans s'effilocher — avantage unique.
+                </p>
+                <div class="step-tip">
+                  ✦ Vérifier la position des trous PU avant de couper.
+                </div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num-col"><div class="step-n">3</div></div>
+              <div class="step-content-col">
+                <h4>Insertion dans le trou PU</h4>
+                <p>
+                  Le crochet-lasso traverse le trou PU de bas en haut, accroche
+                  la section de cheveux naturels et les fait passer à travers.
+                </p>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num-col"><div class="step-n">4</div></div>
+              <div class="step-content-col">
+                <h4>Mise en place de l'anneau</h4>
+                <p>
+                  Glisser le micro-anneau silicone sur les cheveux déjà passés
+                  dans le trou. Positionner à 1 cm du cuir chevelu, dans le gap
+                  central.
+                </p>
+                <div class="step-tip">
+                  ✦ L'anneau doit être entre les deux trames — ni au-dessus ni
+                  en dessous.
+                </div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num-col"><div class="step-n">5</div></div>
+              <div class="step-content-col">
+                <h4>Fermeture</h4>
+                <p>
+                  Un seul clic avec la pince. Ne pas sur-serrer — la tenue est
+                  assurée par la forme de l'anneau, pas par la pression.
+                </p>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num-col"><div class="step-n">6</div></div>
+              <div class="step-content-col">
+                <h4>Pose en quinconce et finition</h4>
+                <p>
+                  Décaler les anneaux d'une ligne à l'autre pour un rendu
+                  naturel. Vérifier la discrétion sous tous les angles.
+                </p>
+              </div>
+            </div>
           </div>
-          <button class="btn-gold" style="width:100%" onclick="alert('https://elixiracademie.gumroad.com/l/bmthbp')">Accéder au Module 5 — 39 €</button>
         </div>
-        <div class="prix-option featured reveal">
-          <div class="prix-option-badge">⭐ MEILLEURE VALEUR</div>
-          <div class="prix-option-title" style="margin-top:16px">Pack 5 modules</div>
-          <span class="prix-big">129 €</span>
-          <p class="prix-option-sub">Au lieu de 156 € — Économisez 27 €</p>
-          <div class="prix-option-includes">
-            <div class="prix-option-include">Les 5 modules complets (1 → 5)</div>
-            <div class="prix-option-include">Module 1 inclus gratuitement</div>
-            <div class="prix-option-include">Toutes les techniques capillaires</div>
-            <div class="prix-option-include">Accès à vie + mises à jour</div>
+      </section>
+
+      <section class="m5-avantages">
+        <div class="container">
+          <span class="section-label reveal">Pourquoi cette technique</span>
+          <h2 class="section-title reveal">
+            8 raisons de la<br /><em>maîtriser maintenant.</em>
+          </h2>
+          <div class="avantages-bento reveal">
+            <div class="av-tile wide">
+              <span class="av-tile-icon">👁️</span>
+              <h3>Discrétion maximale</h3>
+              <p>
+                L'anneau est caché entre les deux trames. Invisible en chignon,
+                queue de cheval, tresse. Aucune autre technique n'atteint ce
+                niveau.
+              </p>
+            </div>
+            <div class="av-tile">
+              <span class="av-tile-icon">🚫</span>
+              <h3>Sans colle ni chaleur</h3>
+              <p>
+                Zéro risque thermique ou chimique. Respectueux des cheveux les
+                plus fragiles.
+              </p>
+            </div>
+            <div class="av-tile">
+              <span class="av-tile-icon">⚡</span>
+              <h3>Pose rapide</h3>
+              <p>Une tête complète en 15 à 30 min. Rentabilité immédiate.</p>
+            </div>
+            <div class="av-tile">
+              <span class="av-tile-icon">✂️</span>
+              <h3>Découpable sans effilocher</h3>
+              <p>
+                Le Genius Weft se coupe proprement à n'importe quelle largeur.
+                Adaptable à chaque cliente.
+              </p>
+            </div>
+            <div class="av-tile">
+              <span class="av-tile-icon">🌬️</span>
+              <h3>Respirabilité</h3>
+              <p>
+                Film PU perforé. Ventilation garantie. Confort même en sport ou
+                en été.
+              </p>
+            </div>
+            <div class="av-tile">
+              <span class="av-tile-icon">🔄</span>
+              <h3>Réutilisable</h3>
+              <p>Déposez, nettoyez, reposez. Économique sur le long terme.</p>
+            </div>
+            <div class="av-tile">
+              <span class="av-tile-icon">💪</span>
+              <h3>Tous types de cheveux</h3>
+              <p>
+                Fins, épais, bouclés, colorés. La structure double-trame
+                s'adapte à tout.
+              </p>
+            </div>
+            <div class="av-tile">
+              <span class="av-tile-icon">💰</span>
+              <h3>Tarif premium</h3>
+              <p>
+                250 à 400 € la pose en salon. Avec ce module, vous êtes sur ce
+                segment dès aujourd'hui.
+              </p>
+            </div>
           </div>
-          <button class="btn-gold" style="width:100%" onclick="showPage('pack')">Voir le pack complet — 129 €</button>
         </div>
-      </div>
-      <div style="text-align:center;margin-top:32px">
-        <div class="guarantee">🛡 Satisfaite ou remboursée — 14 jours · Sans question</div>
-      </div>
+      </section>
+
+      <section class="m5-comp">
+        <div class="container">
+          <span class="section-label reveal">Comparatif</span>
+          <h2 class="section-title reveal">
+            Butterfly Weft vs<br /><em>les autres techniques.</em>
+          </h2>
+          <div class="comp-wrap reveal">
+            <table class="comp-tbl">
+              <thead>
+                <tr>
+                  <th>Critère</th>
+                  <th>Kératine</th>
+                  <th>Loops</th>
+                  <th>Tape-In</th>
+                  <th class="butterfly-col">🦋 Butterfly</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Chaleur requise</td>
+                  <td>Oui</td>
+                  <td>Non</td>
+                  <td>Non</td>
+                  <td class="butterfly-col">Non ✓</td>
+                </tr>
+                <tr>
+                  <td>Colle</td>
+                  <td>Oui</td>
+                  <td>Non</td>
+                  <td>Oui</td>
+                  <td class="butterfly-col">Non ✓</td>
+                </tr>
+                <tr>
+                  <td>Visible cheveux attachés</td>
+                  <td>Parfois</td>
+                  <td>Parfois</td>
+                  <td>Oui</td>
+                  <td class="butterfly-col">Non ✓✓</td>
+                </tr>
+                <tr>
+                  <td>Durée de pose</td>
+                  <td>1–2h</td>
+                  <td>30–60min</td>
+                  <td>15–30min</td>
+                  <td class="butterfly-col">15–30min ✓</td>
+                </tr>
+                <tr>
+                  <td>Cheveux fins</td>
+                  <td>Possible</td>
+                  <td>Très bien</td>
+                  <td>Attention</td>
+                  <td class="butterfly-col">Excellent ✓</td>
+                </tr>
+                <tr>
+                  <td>Sport / piscine</td>
+                  <td>Possible</td>
+                  <td>Possible</td>
+                  <td>Difficile</td>
+                  <td class="butterfly-col">Parfait ✓</td>
+                </tr>
+                <tr>
+                  <td>Tarif marché</td>
+                  <td>80–200€</td>
+                  <td>60–150€</td>
+                  <td>60–150€</td>
+                  <td class="butterfly-col">250–400€ ✓</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="m5-faq">
+        <div class="container-sm">
+          <span class="section-label reveal">Questions fréquentes</span>
+          <h2 class="section-title reveal">
+            Vos questions,<br /><em>mes réponses.</em>
+          </h2>
+          <div class="faq-accordion reveal">
+            <div class="faq-item">
+              <button class="faq-q">
+                Faut-il un diplôme pour pratiquer le Butterfly Weft ?<span
+                  class="faq-icon"
+                  >+</span
+                >
+              </button>
+              <div class="faq-a">
+                Non pour la méthode micro-anneaux. Les méthodes Beaded Row et
+                Invisible Beaded Row nécessitent une maîtrise de la couture sur
+                cheveux, conseillée après pratique régulière.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q">
+                Combien de temps durent ces extensions ?<span class="faq-icon"
+                  >+</span
+                >
+              </button>
+              <div class="faq-a">
+                2 à 4 mois avec un entretien adapté. Les mèches peuvent être
+                reposées plusieurs fois après nettoyage et remplacement des
+                anneaux — rentable pour la cliente comme pour vous.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q">
+                Où acheter les mèches Genius Butterfly Weft ?<span
+                  class="faq-icon"
+                  >+</span
+                >
+              </button>
+              <div class="faq-a">
+                Le module inclut une section fournisseurs détaillée avec
+                références recommandées, du haut de gamme à l'entrée de gamme.
+                Vous saurez exactement quoi commander avant votre première pose.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q">
+                Combien facturer une pose ?<span class="faq-icon">+</span>
+              </button>
+              <div class="faq-a">
+                Les tarifs marché se situent entre 150 € (débutante qui
+                construit son portfolio) et 400 € (professionnelle
+                expérimentée). Le retour sur investissement de la formation est
+                immédiat.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q">
+                Comment accéder au module après achat ?<span class="faq-icon"
+                  >+</span
+                >
+              </button>
+              <div class="faq-a">
+                Immédiatement après paiement via Gumroad ou Stan.store, vous
+                recevez un lien de téléchargement par email. Accès instantané,
+                24h/24, à vie.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="m5-prix" id="m5-prix">
+        <div class="container">
+          <span class="section-label" style="display: block; text-align: center"
+            >Accès au module</span
+          >
+          <h2 class="section-title" style="text-align: center">
+            Choisissez votre<br /><em>formule.</em>
+          </h2>
+          <div class="prix-stack">
+            <div class="prix-option reveal">
+              <div class="prix-option-title">Module 5 seul</div>
+              <span class="prix-big">39 €</span>
+              <p class="prix-option-sub">
+                Accès à vie · Téléchargement immédiat
+              </p>
+              <div class="prix-option-includes">
+                <div class="prix-option-include">
+                  Module PDF complet — 14 sections
+                </div>
+                <div class="prix-option-include">
+                  3 méthodes de pose détaillées
+                </div>
+                <div class="prix-option-include">
+                  Erreurs à éviter + entretien + dépose
+                </div>
+                <div class="prix-option-include">
+                  Quiz 8 questions + mises à jour à vie
+                </div>
+              </div>
+              <a href="https://elixiracademie.gumroad.com/l/bmthbp" class="btn-gold"
+                style="font-size:15px; padding:20px 60px; text-decoration:none; display:inline-block; position:relative; z-index:10000;">
+                Accéder au Module 5 — 39 €
+              </a>
+            </div>
+            <div class="prix-option featured reveal">
+              <div class="prix-option-badge">⭐ MEILLEURE VALEUR</div>
+              <div class="prix-option-title" style="margin-top: 16px">
+                Pack 5 modules
+              </div>
+              <span class="prix-big">129 €</span>
+              <p class="prix-option-sub">Au lieu de 156 € — Économisez 27 €</p>
+              <div class="prix-option-includes">
+                <div class="prix-option-include">
+                  Les 5 modules complets (1 → 5)
+                </div>
+                <div class="prix-option-include">
+                  Module 1 inclus gratuitement
+                </div>
+                <div class="prix-option-include">
+                  Toutes les techniques capillaires
+                </div>
+                <div class="prix-option-include">
+                  Accès à vie + mises à jour
+                </div>
+              </div>
+              <a href="https://elixiracademie.gumroad.com/l/dvwlbk" class="btn-gold"
+                style="font-size:15px; padding:20px 60px; text-decoration:none; display:inline-block; position:relative; z-index:10000;">
+                Voir le pack complet — 129 €
+              </a>
+            </div>
+          </div>
+          <div style="text-align: center; margin-top: 32px">
+            <div class="guarantee">
+              🛡 Satisfaite ou remboursée — 14 jours · Sans question
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <div class="footer-brand">ÉLIXIR ACADÉMIE</div>
+        <p>
+          Formation Professionnelle Extensions Capillaires · elixir-academie.fr
+        </p>
+      </footer>
     </div>
-  </section>
 
-  <footer class="site-footer">
-    <div class="footer-brand">ÉLIXIR ACADÉMIE</div>
-    <p>Formation Professionnelle Extensions Capillaires · elixir-academie.fr</p>
-  </footer>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════════
+    <!-- ═══════════════════════════════════════════════════════════════════
      PAGE 4 — PACK COMPLET UPSELL
 ═══════════════════════════════════════════════════════════════════ -->
-<div class="page" id="page-pack">
-  <section class="pack-hero">
-    <div class="hero-eyebrow" style="position:relative;z-index:1"><div class="hero-eyebrow-dot"></div>Collection Complète · 5 Modules</div>
-    <h1 class="reveal">
-      <span class="l1">Tout maîtriser.</span>
-      <span class="l2">Une seule fois.</span>
-    </h1>
-    <p class="pack-hero-sub reveal">Les 5 modules Élixir Académie. Des fondamentaux au Genius Butterfly Weft. La formation la plus complète du marché.</p>
-    <div class="reveal">
-      <button class="btn-gold" onclick="document.getElementById('pack-value').scrollIntoView({behavior:'smooth'})">Voir l'offre pack — 129 €</button>
+    <div class="page" id="page-pack">
+      <section class="pack-hero">
+        <div class="hero-eyebrow" style="position: relative; z-index: 1">
+          <div class="hero-eyebrow-dot"></div>
+          Collection Complète · 5 Modules
+        </div>
+        <h1 class="reveal">
+          <span class="l1">Tout maîtriser.</span>
+          <span class="l2">Une seule fois.</span>
+        </h1>
+        <p class="pack-hero-sub reveal">
+          Les 5 modules Élixir Académie. Des fondamentaux au Genius Butterfly
+          Weft. La formation la plus complète du marché.
+        </p>
+        <div class="reveal">
+          <button
+            class="btn-gold"
+            onclick="
+              document
+                .getElementById('pack-value')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            Voir l'offre pack — 129 €
+          </button>
+        </div>
+      </section>
+
+      <section class="pack-modules-section">
+        <div class="container">
+          <span class="section-label reveal">Les 5 modules inclus</span>
+          <h2 class="section-title reveal">
+            Tout ce que vous<br /><em>obtenez.</em>
+          </h2>
+          <div class="pack-modules-list reveal">
+            <div class="pack-mod-row">
+              <div class="pack-mod-num">01</div>
+              <div class="pack-mod-info">
+                <h3>💎 Les Fondamentaux</h3>
+                <p>
+                  Anatomie du cheveu · Phases de croissance · Choisir ses mèches
+                  · Entretien · Quiz 6 questions
+                </p>
+              </div>
+              <div class="pack-mod-price free-tag-price">GRATUIT</div>
+            </div>
+            <div class="pack-mod-row">
+              <div class="pack-mod-num">02</div>
+              <div class="pack-mod-info">
+                <h3>🔥 Extensions à Chaud — Kératine Fusion</h3>
+                <p>
+                  Principe kératine végétale · Pose 6 étapes · 6 erreurs à
+                  éviter · Dépose · Réutilisation · Quiz
+                </p>
+              </div>
+              <div class="pack-mod-price">39 €</div>
+            </div>
+            <div class="pack-mod-row">
+              <div class="pack-mod-num">03</div>
+              <div class="pack-mod-info">
+                <h3>❄️ Extensions à Froid — Loops & Anneaux</h3>
+                <p>
+                  Sans chaleur · Anneaux silicone · Pose quinconce · Trouver vos
+                  clientes · Quiz 7 questions
+                </p>
+              </div>
+              <div class="pack-mod-price">39 €</div>
+            </div>
+            <div class="pack-mod-row">
+              <div class="pack-mod-num">04</div>
+              <div class="pack-mod-info">
+                <h3>✨ Extensions Adhésives — Tape-In</h3>
+                <p>
+                  Sandwich double face · Pose 15–30min · 7 erreurs · Dépose
+                  remover · Repose · Quiz 7 questions
+                </p>
+              </div>
+              <div class="pack-mod-price">39 €</div>
+            </div>
+            <div class="pack-mod-row highlight">
+              <div class="pack-mod-num" style="color: var(--or)">05</div>
+              <div class="pack-mod-info">
+                <h3>🦋 Genius Butterfly Weft — NOUVEAUTÉ 2025</h3>
+                <p>
+                  Double trame · OVO Hole · 3 méthodes de pose · Invisible en
+                  chignon · Tarif 250–400€ · Quiz 8 questions
+                </p>
+              </div>
+              <div class="pack-mod-price">39 €</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pack-value-section" id="pack-value">
+        <div class="container">
+          <div class="value-card reveal">
+            <div class="pack-badge">Pack Formation Complète</div>
+            <h2
+              class="serif"
+              style="font-size: clamp(32px, 5vw, 52px); margin-bottom: 32px"
+            >
+              Votre investissement
+            </h2>
+            <div class="value-vs">
+              <div class="value-side">
+                <span class="value-side-label">Valeur totale</span>
+                <div class="value-side-price value-old">156 €</div>
+              </div>
+              <div class="value-separator">→</div>
+              <div class="value-side">
+                <span class="value-side-label">Prix pack</span>
+                <div class="value-side-price value-new">129 €</div>
+              </div>
+            </div>
+            <div class="value-economy">
+              🎁 Vous économisez 27 € · Soit le Module 1 offert
+            </div>
+            <div class="value-features">
+              <div class="value-feat">5 modules PDF complets</div>
+              <div class="value-feat">Quiz dans chaque module</div>
+              <div class="value-feat">Toutes les techniques 2025</div>
+              <div class="value-feat">Accès à vie</div>
+              <div class="value-feat">Mises à jour gratuites</div>
+              <div class="value-feat">Téléchargement immédiat</div>
+              </div>
+              <a href="https://elixiracademie.gumroad.com/l/dvwlbk" class="btn-gold"
+                style="font-size:15px; padding:20px 60px; text-decoration:none; display:inline-block; position:relative; z-index:10000;">
+                Je prends le pack complet — 129 €
+              </a>
+              <div style="margin-top: 20px">
+                <div class="guarantee">
+                  🛡 Satisfaite ou remboursée — 14 jours · Sans question
+                </div>
+              </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pack-social">
+        <div class="container">
+          <span class="section-label reveal">Ce qu'elles en disent</span>
+          <h2 class="section-title reveal">
+            Elles ont commencé<br /><em>comme vous.</em>
+          </h2>
+          <div class="testi-grid">
+            <div class="testi-card reveal">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">
+                « Les modules sont clairs, bien structurés, professionnels. J'ai
+                posé mes premières extensions après avoir lu le Module 2. Le
+                quiz m'a vraiment aidée à valider mes acquis. »
+              </p>
+              <div class="testi-author">
+                <div class="testi-avatar">S</div>
+                <div>
+                  <div class="testi-author-name">Sophie M.</div>
+                  <div class="testi-author-role">Esthéticienne — Lyon</div>
+                </div>
+              </div>
+            </div>
+            <div class="testi-card reveal">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">
+                « Le Butterfly Weft a changé mon activité. Mes clientes qui
+                venaient chercher de la discrétion sont maintenant mes
+                meilleures ambassadrices. 39€ les mieux investis. »
+              </p>
+              <div class="testi-author">
+                <div class="testi-avatar">A</div>
+                <div>
+                  <div class="testi-author-name">Amélie D.</div>
+                  <div class="testi-author-role">
+                    Prothésiste ongulaire — Paris
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="testi-card reveal">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">
+                « J'avais peur de me lancer sans formation présentielle. Le pack
+                complet m'a donné toute la confiance nécessaire. Je propose
+                maintenant les 4 techniques à mes clientes. »
+              </p>
+              <div class="testi-author">
+                <div class="testi-avatar">L</div>
+                <div>
+                  <div class="testi-author-name">Laura K.</div>
+                  <div class="testi-author-role">
+                    Auto-entrepreneuse — Bordeaux
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pack-cta-final">
+        <div class="container-sm" style="text-align: center">
+          <div class="gold-bar-c reveal" style="margin-bottom: 40px"></div>
+          <h2 class="reveal">
+            Prête à vous lancer<br /><em>pour de vrai ?</em>
+          </h2>
+          <p class="reveal">
+            Le Module 1 est gratuit. Le pack complet est à 129 €. Il n'y a
+            aucune raison d'attendre.
+          </p>
+          <div class="hero-actions reveal">
+            <button class="btn-gold" onclick="showPage('free')">
+              Commencer gratuitement →
+            </button>
+            <button
+              class="btn-ghost"
+              onclick="
+                window.location.href =
+                  'https://elixiracademie.gumroad.com/l/dvwlbk'
+              "
+            >
+              Pack complet — 129 €
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <div class="footer-brand">ÉLIXIR ACADÉMIE</div>
+        <p>
+          Formation Professionnelle Extensions Capillaires · elixir-academie.fr
+        </p>
+        <p style="margin-top: 8px; font-size: 12px; color: #333">
+          © 2025 Élixir Académie · Tous droits réservés
+        </p>
+      </footer>
     </div>
-  </section>
 
-  <section class="pack-modules-section">
-    <div class="container">
-      <span class="section-label reveal">Les 5 modules inclus</span>
-      <h2 class="section-title reveal">Tout ce que vous<br><em>obtenez.</em></h2>
-      <div class="pack-modules-list reveal">
-        <div class="pack-mod-row">
-          <div class="pack-mod-num">01</div>
-          <div class="pack-mod-info"><h3>💎 Les Fondamentaux</h3><p>Anatomie du cheveu · Phases de croissance · Choisir ses mèches · Entretien · Quiz 6 questions</p></div>
-          <div class="pack-mod-price free-tag-price">GRATUIT</div>
-        </div>
-        <div class="pack-mod-row">
-          <div class="pack-mod-num">02</div>
-          <div class="pack-mod-info"><h3>🔥 Extensions à Chaud — Kératine Fusion</h3><p>Principe kératine végétale · Pose 6 étapes · 6 erreurs à éviter · Dépose · Réutilisation · Quiz</p></div>
-          <div class="pack-mod-price">39 €</div>
-        </div>
-        <div class="pack-mod-row">
-          <div class="pack-mod-num">03</div>
-          <div class="pack-mod-info"><h3>❄️ Extensions à Froid — Loops & Anneaux</h3><p>Sans chaleur · Anneaux silicone · Pose quinconce · Trouver vos clientes · Quiz 7 questions</p></div>
-          <div class="pack-mod-price">39 €</div>
-        </div>
-        <div class="pack-mod-row">
-          <div class="pack-mod-num">04</div>
-          <div class="pack-mod-info"><h3>✨ Extensions Adhésives — Tape-In</h3><p>Sandwich double face · Pose 15–30min · 7 erreurs · Dépose remover · Repose · Quiz 7 questions</p></div>
-          <div class="pack-mod-price">39 €</div>
-        </div>
-        <div class="pack-mod-row highlight">
-          <div class="pack-mod-num" style="color:var(--or)">05</div>
-          <div class="pack-mod-info"><h3>🦋 Genius Butterfly Weft — NOUVEAUTÉ 2025</h3><p>Double trame · OVO Hole · 3 méthodes de pose · Invisible en chignon · Tarif 250–400€ · Quiz 8 questions</p></div>
-          <div class="pack-mod-price">39 €</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="pack-value-section" id="pack-value">
-    <div class="container">
-      <div class="value-card reveal">
-        <div class="pack-badge">Pack Formation Complète</div>
-        <h2 class="serif" style="font-size:clamp(32px,5vw,52px);margin-bottom:32px">Votre investissement</h2>
-        <div class="value-vs">
-          <div class="value-side"><span class="value-side-label">Valeur totale</span><div class="value-side-price value-old">156 €</div></div>
-          <div class="value-separator">→</div>
-          <div class="value-side"><span class="value-side-label">Prix pack</span><div class="value-side-price value-new">129 €</div></div>
-        </div>
-        <div class="value-economy">🎁 Vous économisez 27 € · Soit le Module 1 offert</div>
-        <div class="value-features">
-          <div class="value-feat">5 modules PDF complets</div>
-          <div class="value-feat">Quiz dans chaque module</div>
-          <div class="value-feat">Toutes les techniques 2025</div>
-          <div class="value-feat">Accès à vie</div>
-          <div class="value-feat">Mises à jour gratuites</div>
-          <div class="value-feat">Téléchargement immédiat</div>
-        </div>
-        <button class="btn-gold" onclick="alert('https://elixiracademie.gumroad.com/l/dvwlbk')" style="font-size:15px;padding:20px 60px">Je prends le pack complet — 129 €</button>
-        <div style="margin-top:20px"><div class="guarantee">🛡 Satisfaite ou remboursée — 14 jours · Sans question</div></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="pack-social">
-    <div class="container">
-      <span class="section-label reveal">Ce qu'elles en disent</span>
-      <h2 class="section-title reveal">Elles ont commencé<br><em>comme vous.</em></h2>
-      <div class="testi-grid">
-        <div class="testi-card reveal">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">« Les modules sont clairs, bien structurés, professionnels. J'ai posé mes premières extensions après avoir lu le Module 2. Le quiz m'a vraiment aidée à valider mes acquis. »</p>
-          <div class="testi-author"><div class="testi-avatar">S</div><div><div class="testi-author-name">Sophie M.</div><div class="testi-author-role">Esthéticienne — Lyon</div></div></div>
-        </div>
-        <div class="testi-card reveal">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">« Le Butterfly Weft a changé mon activité. Mes clientes qui venaient chercher de la discrétion sont maintenant mes meilleures ambassadrices. 39€ les mieux investis. »</p>
-          <div class="testi-author"><div class="testi-avatar">A</div><div><div class="testi-author-name">Amélie D.</div><div class="testi-author-role">Prothésiste ongulaire — Paris</div></div></div>
-        </div>
-        <div class="testi-card reveal">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">« J'avais peur de me lancer sans formation présentielle. Le pack complet m'a donné toute la confiance nécessaire. Je propose maintenant les 4 techniques à mes clientes. »</p>
-          <div class="testi-author"><div class="testi-avatar">L</div><div><div class="testi-author-name">Laura K.</div><div class="testi-author-role">Auto-entrepreneuse — Bordeaux</div></div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="pack-cta-final">
-    <div class="container-sm" style="text-align:center">
-      <div class="gold-bar-c reveal" style="margin-bottom:40px"></div>
-      <h2 class="reveal">Prête à vous lancer<br><em>pour de vrai ?</em></h2>
-      <p class="reveal">Le Module 1 est gratuit. Le pack complet est à 129 €. Il n'y a aucune raison d'attendre.</p>
-      <div class="hero-actions reveal">
-        <button class="btn-gold" onclick="showPage('free')">Commencer gratuitement →</button>
-        <button class="btn-ghost" onclick="alert('https://elixiracademie.gumroad.com/l/dvwlbk')">Pack complet — 129 €</button>
-      </div>
-    </div>
-  </section>
-
-  <footer class="site-footer">
-    <div class="footer-brand">ÉLIXIR ACADÉMIE</div>
-    <p>Formation Professionnelle Extensions Capillaires · elixir-academie.fr</p>
-    <p style="margin-top:8px;font-size:12px;color:#333">© 2025 Élixir Académie · Tous droits réservés</p>
-  </footer>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════
+    <!-- ═══════════════════════════════════════════════════════════
      SCRIPTS
 ═══════════════════════════════════════════════════════════ -->
-<script>
-// ── Curseur custom ────────────────────────────────────────
-const cursor = document.getElementById('cursor');
-const cursorRing = document.getElementById('cursor-ring');
-let mx=0, my=0, rx=0, ry=0;
-document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
-function animRing() {
-  rx += (mx-rx)*0.12; ry += (my-ry)*0.12;
-  cursorRing.style.left=rx+'px'; cursorRing.style.top=ry+'px';
-  requestAnimationFrame(animRing);
+    <script>
+      // ── Curseur custom ────────────────────────────────────────
+      const cursor = document.getElementById("cursor");
+      const cursorRing = document.getElementById("cursor-ring");
+      let mx = 0,
+        my = 0,
+        rx = 0,
+        ry = 0;
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        cursor.style.left = mx + "px";
+        cursor.style.top = my + "px";
+      });
+      function animRing() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        cursorRing.style.left = rx + "px";
+        cursorRing.style.top = ry + "px";
+        requestAnimationFrame(animRing);
+      }
+      animRing();
+
+      // ── Navigation entre pages ────────────────────────────────
+      function showPage(id) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+        document.getElementById("page-" + id).classList.add("active");
+        // Update nav steps
+        const order = ["home", "free", "m5", "pack"];
+        const idx = order.indexOf(id);
+        order.forEach((s, i) => {
+          const el = document.getElementById("step-" + s);
+          if (!el) return;
+          el.classList.remove("active", "done");
+          if (i < idx)
+            (el.classList.add("done"),
+              (el.querySelector(".tnav-step-dot").textContent = "✓"));
+          else if (i === idx)
+            (el.classList.add("active"),
+              (el.querySelector(".tnav-step-dot").textContent = i + 1));
+          else el.querySelector(".tnav-step-dot").textContent = i + 1;
+        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        // Trigger reveals
+        setTimeout(triggerReveals, 100);
+      }
+
+      // ── Scroll reveal ─────────────────────────────────────────
+      function triggerReveals() {
+        const obs = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("visible");
+                obs.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.1 },
+        );
+        document
+          .querySelectorAll(
+            ".page.active .reveal, .page.active .reveal-l, .page.active .reveal-r",
+          )
+          .forEach((el) => {
+            if (!el.classList.contains("visible")) obs.observe(el);
+          });
+      }
+      triggerReveals();
+
+      // ── FAQ ───────────────────────────────────────────────────
+      document.addEventListener("click", (e) => {
+        const btn = e.target.closest(".faq-q");
+        if (!btn) return;
+        const item = btn.parentElement;
+        const wasOpen = item.classList.contains("open");
+        document
+          .querySelectorAll(".faq-item")
+          .forEach((i) => i.classList.remove("open"));
+        if (!wasOpen) item.classList.add("open");
+      });
+
+      // ── Scroll vers modules ───────────────────────────────────
+      function scrollToModules() {
+        document
+          .getElementById("modules-anchor")
+          .scrollIntoView({ behavior: "smooth" });
+      }
+
+      // ── Form download FREE PDF ─────────────────────────────────────────
+      async function handleFreeDownload() {
+    // 1. Récupération des données du formulaire
+    const prenom = document.getElementById('input-prenom').value;
+    const email = document.getElementById('input-email').value;
+    const btn = document.querySelector('.form-submit');
+
+    // Vérification de sécurité
+    if (!prenom || !email) {
+        alert("Oups ! Merci de remplir ton prénom et ton email.");
+        return;
+    }
+
+    // Effet visuel pour faire patienter la cliente
+    btn.innerHTML = "Élixir en cours de préparation...";
+    btn.disabled = true;
+
+    try {
+        // 2. L'envoi (le fameux fetch)
+        const response = await fetch('https://api.brevo.com/v3/contacts', {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'application/json',
+                'api-key': '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' // <-- SUPPRIME CE TEXTE ET COLLE TA CLÉ API
+            },
+            body: JSON.stringify({
+                email: email,
+                attributes: { PRENOM: prenom },
+                listIds: [3], // <-- VERIFIE BIEN L'ID DE TA LISTE DANS L'ONGLET "LISTES"
+                updateEnabled: true
+            })
+        });
+
+        // 3. Gestion de la réponse
+        if (response.ok || response.status === 204 || response.status === 201) {
+            alert("Magnifique " + prenom + " ! Ton Module 1 vient d'être envoyé par mail.");
+            // Ici tu peux ajouter une redirection si tu veux : 
+            // window.location.href = "page-merci.html";
+        } else {
+            const errorData = await response.json();
+            alert("Erreur : " + errorData.message);
+        }
+    } catch (error) {
+        alert("Un problème de connexion est survenu. Vérifie ta clé API.");
+    } finally {
+        // On remet le bouton à son état normal
+        btn.innerHTML = "Recevoir le Module 1 gratuitement →";
+        btn.disabled = false;
+    }
 }
-animRing();
 
-// ── Navigation entre pages ────────────────────────────────
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  // Update nav steps
-  const order = ['home','free','m5','pack'];
-  const idx = order.indexOf(id);
-  order.forEach((s,i) => {
-    const el = document.getElementById('step-'+s);
-    if (!el) return;
-    el.classList.remove('active','done');
-    if (i < idx) el.classList.add('done'), el.querySelector('.tnav-step-dot').textContent='✓';
-    else if (i === idx) el.classList.add('active'), el.querySelector('.tnav-step-dot').textContent=i+1;
-    else el.querySelector('.tnav-step-dot').textContent=i+1;
-  });
-  window.scrollTo({ top:0, behavior:'smooth' });
-  // Trigger reveals
-  setTimeout(triggerReveals, 100);
-}
-
-// ── Scroll reveal ─────────────────────────────────────────
-function triggerReveals() {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold:0.1 });
-  document.querySelectorAll('.page.active .reveal, .page.active .reveal-l, .page.active .reveal-r').forEach(el => {
-    if (!el.classList.contains('visible')) obs.observe(el);
-  });
-}
-triggerReveals();
-
-// ── FAQ ───────────────────────────────────────────────────
-document.addEventListener('click', e => {
-  const btn = e.target.closest('.faq-q');
-  if (!btn) return;
-  const item = btn.parentElement;
-  const wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-  if (!wasOpen) item.classList.add('open');
-});
-
-// ── Scroll vers modules ───────────────────────────────────
-function scrollToModules() {
-  document.getElementById('modules-anchor').scrollIntoView({ behavior:'smooth' });
-}
-
-// ── Form download ─────────────────────────────────────────
-function handleFreeDownload() {
-  const prenom = document.getElementById('input-prenom').value.trim();
-  const email = document.getElementById('input-email').value.trim();
-  if (!prenom || !email) { alert('Merci de remplir votre prénom et email.'); return; }
-  if (!email.includes('@')) { alert('Merci d\'entrer un email valide.'); return; }
-  // Ici : connectez votre service email (Mailchimp, Brevo, etc.)
-  alert(`Merci ${prenom} ! Votre Module 1 vous a été envoyé à ${email}.\n\n(Configurez votre service email pour l'envoi automatique)`);
-  showPage('m5');
-}
-
-// ── Stagger animations ────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.modules-grid .mod-card').forEach((c,i) => {
-    c.style.transitionDelay = (i*0.08)+'s';
-    c.classList.add('reveal');
-  });
-  document.querySelectorAll('.avantages-bento .av-tile').forEach((t,i) => {
-    t.style.transitionDelay = (i*0.06)+'s';
-    t.classList.add('reveal');
-  });
-  triggerReveals();
-});
-</script>
-</body>
+      // ── Stagger animations ────────────────────────────────────
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".modules-grid .mod-card").forEach((c, i) => {
+          c.style.transitionDelay = i * 0.08 + "s";
+          c.classList.add("reveal");
+        });
+        document
+          .querySelectorAll(".avantages-bento .av-tile")
+          .forEach((t, i) => {
+            t.style.transitionDelay = i * 0.06 + "s";
+            t.classList.add("reveal");
+          });
+        triggerReveals();
+      });
+    </script>
+  </body>
 </html>
